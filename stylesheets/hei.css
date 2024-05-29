@@ -1,0 +1,199 @@
+:root {
+    --hei-palette-magenta: 225, 5, 113;
+    --hei-palette-yellow: 243, 193, 5;
+    --hei-palette-green: 0, 167, 109;
+    --hei-palette-orange: 243, 111, 49;
+    --hei-palette-blue: 0, 165, 228;
+    --hei-palette-purple: 122, 59, 139;
+    --hei-palette-dark: 32, 32, 32;
+    --hei-palette-darker: 26, 26, 26;
+
+    --md-primary-fg-color: rgb(var(--hei-palette-magenta));
+    --md-accent-fg-color: rgb(var(--hei-palette-magenta));
+
+    --md-admonition-icon--task: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q65 0 123 19t107 53l-58 59q-38-24-81-37.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160q133 0 226.5-93.5T800-480q0-18-2-36t-6-35l65-65q11 32 17 66t6 70q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm-56-216L254-466l56-56 114 114 400-401 56 56-456 457Z"/></svg>');
+    --md-admonition-icon--important: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 412L346-160H160v-186L28-480l132-134v-186h186l134-132 134 132h186v186l132 134-132 134v186H614L480-28Zm0-112 100-100h140v-140l100-100-100-100v-140H580L480-820 380-720H240v140L140-480l100 100v140h140l100 100Zm0-340Z"/></svg>');
+    --md-admonition-icon--tip: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-80q-33 0-56.5-23.5T400-160h160q0 33-23.5 56.5T480-80ZM320-200v-80h320v80H320Zm10-120q-69-41-109.5-110T180-580q0-125 87.5-212.5T480-880q125 0 212.5 87.5T780-580q0 81-40.5 150T630-320H330Zm24-80h252q45-32 69.5-79T700-580q0-92-64-156t-156-64q-92 0-156 64t-64 156q0 54 24.5 101t69.5 79Zm126 0Z"/></svg>');
+    --md-admonition-icon--duration: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m612-292 56-56-148-148v-184h-80v216l172 172ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Z"/></svg>');
+    --md-admonition-icon--goals: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M360-720h80v-80h-80v80Zm160 0v-80h80v80h-80ZM360-400v-80h80v80h-80Zm320-160v-80h80v80h-80Zm0 160v-80h80v80h-80Zm-160 0v-80h80v80h-80Zm160-320v-80h80v80h-80Zm-240 80v-80h80v80h-80ZM200-160v-640h80v80h80v80h-80v80h80v80h-80v320h-80Zm400-320v-80h80v80h-80Zm-160 0v-80h80v80h-80Zm-80-80v-80h80v80h-80Zm160 0v-80h80v80h-80Zm80-80v-80h80v80h-80Z"/></svg>');
+    --md-admonition-icon--feedback: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M240-400h320v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"/></svg>');
+}
+
+body[data-md-color-scheme="slate"],
+body[data-md-color-scheme="slate"] .md-typeset .task,
+body[data-md-color-scheme="slate"] .md-typeset .important,
+body[data-md-color-scheme="slate"] .md-typeset .tip,
+body[data-md-color-scheme="slate"] .md-typeset .duration,
+body[data-md-color-scheme="slate"] .md-typeset .feedback,
+body[data-md-color-scheme="slate"] .md-typeset .goals{
+    background-color: rgb(var(--hei-palette-dark));
+}
+
+body[data-md-color-scheme="slate"] .md-typeset code, body[data-md-color-scheme="slate"] .md-typeset .linenos {
+    background-color: rgb(var(--hei-palette-darker));
+}
+
+body[data-md-color-scheme="slate"] .md-typeset .filename {
+    background: none;
+}
+
+.md-typeset h1, .md-typeset h2, .md-typeset h3, .md-typeset h4, .md-typeset h5, .md-typeset h6 {
+    font-weight: bold;
+}
+
+.md-typeset .md-tooltip {
+    background-color: rgb(var(--hei-palette-dark));
+}
+
+.md-nav--secondary label.md-nav__title {
+    display: none;
+}
+
+.md-header__button.md-logo img, .md-header__button.md-logo svg {
+    height: 64px;
+    width: 64px;
+}
+
+.md-typeset .admonition.task,
+.md-typeset details.task {
+    border-color: rgb(var(--hei-palette-magenta));
+}
+.md-typeset .task > .admonition-title,
+.md-typeset .task > summary {
+    background-color: rgb(var(--hei-palette-magenta), 0.1);
+}
+.md-typeset .task > .admonition-title::before,
+.md-typeset .task > summary::before {
+    background-color: rgb(var(--hei-palette-magenta));
+    -webkit-mask-image: var(--md-admonition-icon--task);
+    mask-image: var(--md-admonition-icon--task);
+}
+.md-typeset .task strong {
+    color: rgb(var(--hei-palette-magenta));
+}
+.md-typeset .task li::marker {
+    color: rgb(var(--hei-palette-magenta));
+}
+
+.md-typeset .admonition.important,
+.md-typeset details.important {
+    border-color: rgb(var(--hei-palette-orange));
+}
+.md-typeset .important > .admonition-title,
+.md-typeset .important > summary {
+    background-color: rgba(var(--hei-palette-orange), 0.1);
+}
+.md-typeset .important > .admonition-title::before,
+.md-typeset .important > summary::before {
+    background-color: rgb(var(--hei-palette-orange));
+    -webkit-mask-image: var(--md-admonition-icon--important);
+    mask-image: var(--md-admonition-icon--important);
+}
+.md-typeset .important strong {
+    color: rgb(var(--hei-palette-orange));
+}
+.md-typeset .important li::marker {
+    color: rgb(var(--hei-palette-orange));
+}
+
+.md-typeset .admonition.tip,
+.md-typeset details.tip {
+    border-color: rgb(var(--hei-palette-yellow));
+}
+.md-typeset .tip > .admonition-title,
+.md-typeset .tip > summary {
+    background-color: rgba(var(--hei-palette-yellow), 0.1);
+}
+.md-typeset .tip > .admonition-title::before,
+ .md-typeset .tip > summary::before {
+     background-color: rgb(var(--hei-palette-yellow));
+     -webkit-mask-image: var(--md-admonition-icon--tip);
+     mask-image: var(--md-admonition-icon--tip);
+ }
+.md-typeset .tip strong {
+    color: rgb(var(--hei-palette-yellow));
+}
+.md-typeset .tip li::marker {
+    color: rgb(var(--hei-palette-yellow));
+}
+
+
+.md-typeset .admonition.duration,
+.md-typeset details.duration {
+    border-color: rgb(var(--hei-palette-blue));
+}
+.md-typeset .duration > .admonition-title,
+.md-typeset .duration > summary {
+    background-color: rgb(var(--hei-palette-blue), 0.1);
+}
+.md-typeset .duration > .admonition-title::before,
+.md-typeset .duration > summary::before {
+    background-color: rgb(var(--hei-palette-blue));
+    -webkit-mask-image: var(--md-admonition-icon--duration);
+    mask-image: var(--md-admonition-icon--duration);
+}
+.md-typeset .duration strong {
+    color: rgb(var(--hei-palette-blue));
+}
+.md-typeset .duration li::marker {
+    color: rgb(var(--hei-palette-blue));
+}
+
+.md-typeset .admonition.goals,
+.md-typeset details.goals {
+    border-color: rgb(var(--hei-palette-green));
+}
+.md-typeset .goals > .admonition-title,
+.md-typeset .goals > summary {
+    background-color: rgb(var(--hei-palette-green), 0.1);
+}
+.md-typeset .goals > .admonition-title::before,
+.md-typeset .goals > summary::before {
+    background-color: rgb(var(--hei-palette-green));
+    -webkit-mask-image: var(--md-admonition-icon--goals);
+    mask-image: var(--md-admonition-icon--goals);
+}
+.md-typeset .goals strong {
+    color: rgb(var(--hei-palette-green));
+}
+.md-typeset .goals li::marker {
+    color: rgb(var(--hei-palette-green));
+}
+
+.md-typeset .admonition.feedback,
+.md-typeset details.feedback {
+    border-color: rgb(var(--hei-palette-purple));
+}
+.md-typeset .feedback > .admonition-title,
+.md-typeset .feedback > summary {
+    background-color: rgb(var(--hei-palette-purple), 0.1);
+}
+.md-typeset .feedback > .admonition-title::before,
+.md-typeset .feedback > summary::before {
+    background-color: rgb(var(--hei-palette-purple));
+    -webkit-mask-image: var(--md-admonition-icon--feedback);
+    mask-image: var(--md-admonition-icon--feedback);
+}
+.md-typeset .feedback strong, .md-typeset .feedback a {
+    color: rgb(var(--hei-palette-purple));
+}
+.md-typeset .feedback li::marker {
+    color: rgb(var(--hei-palette-purple));
+}
+
+td.code span.kn, td.code span.kd, td.code span.kc {
+    color: rgb(var(--hei-palette-magenta));
+}
+
+td.code span.s {
+    color: rgb(var(--hei-palette-green));
+}
+
+td.code span.kt, td.code span.nb {
+    color: rgb(var(--hei-palette-blue));
+}
+
+td.code span.mf {
+    color: rgb(var(--hei-palette-orange));
+}
+

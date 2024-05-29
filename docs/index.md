@@ -3,7 +3,7 @@ hide:
   - navigation
 ---
 
-# Go Programming Language Hands-On
+# The Go Programming Language
 
 ## Introduction
 
@@ -14,11 +14,11 @@ hide:
     - You have chosen an **IDE** for developing **Go** applications for yourself and know how to use it.
 
     Note that this course is not a complete and comprehensive guide to the Go programming language. It is designed to provide you with a basic understanding of Go and help you get
-    started with Go for this course. If you want to learn more about Go, you can refer to the official Go documentation and other online resources. This guide is non theless not 
-    for beginners, but for people who already have some decent programming experience. 
+    started with Go for this course. If you want to learn more about Go, you can refer to the official Go documentation and other online resources. This guide is not for 
+    beginners, but for people who already have some decent programming experience. 
 
-!!! duration "The hands-on should be completed in 4 hours"
-    The time to spend on this hands-on should not exceed **4 hours**. If you can not finish it in this time, you should **continue to work on it at home**.
+!!! duration "The hands-on should be completed in 2-4 hours"
+    AS it is a repetition of the theory session, the time to spend on this should not exceed **4 hours**.
 
 ??? tip "Read tips, they are really useful!"
     Through this hands-on, we provide **useful tips** that might help you during the project. These tips are always provided in boxes like this one.
@@ -26,9 +26,9 @@ hide:
 ??? important "Always read the information in these boxes and keep it in mind."
     **Indispensable information** that you will need to keep in mind as you will use that often during the project is always provided in red boxes like this one.
 
-??? task "Complete all tasks in this hands-on"
-    The basic idea of these hands-on are **learning by doing**, so there are tasks in these hands-on documents that you should complete.
-    These tasks are always provided in boxes like this one.
+??? task "Complete all tasks"
+    The basic idea of this document is to get you started on the Go syntax and additionally instruct you how to install a Go development environment on your computer. So there are 
+    tasks in this document that you should complete. These tasks are always provided in boxes like this one.
 
 ??? feedback "If you have any questions, need help or found an error, don't hesitate to contact me."
     I will be happy to help you. Just write an email to <a href="mailto:michael.clausen@hevs.ch">michael.clausen@hevs.ch</a> with your feedback.

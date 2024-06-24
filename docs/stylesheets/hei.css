@@ -197,3 +197,13 @@ td.code span.mf {
     color: rgb(var(--hei-palette-orange));
 }
 
+.md-typeset img {
+    display: block;
+    margin: 0 auto;
+    padding: 64px 15%;
+    background: none;
+}
+
+.glightbox-container img {
+    background: none !important;
+}

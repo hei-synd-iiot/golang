@@ -33,6 +33,8 @@ hide:
 ??? feedback "If you have any questions, need help or found an error, don't hesitate to contact me."
     I will be happy to help you. Just write an email to <a href="mailto:michael.clausen@hevs.ch">michael.clausen@hevs.ch</a> with your feedback.
 
+??? downloads "Downloads"
+    - [Slides](downloads/The%20Go%20Programming%20Language.pdf): PDF version of the slides used in the theory session.
 
 ### Why another programming language?
 

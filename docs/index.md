@@ -1998,6 +1998,8 @@ Another key aspect of functions in Go is their ability to form closures, which w
 
 Go supports **anonymous functions**, which can form **closures**. Anonymous functions are useful when you want to define a function inline without having to name it.
 
+![](images/Closures.svg)
+
 ```go linenums="1"
 package main
 
@@ -2034,6 +2036,8 @@ The last feature of functions we’ll look at for now is recursion.
 ### Recursion
 
 Go supports **recursive functions**. Here’s a classic example.
+
+![](images/Recursion.svg)
 
 ```go linenums="1"
 package main
@@ -2074,6 +2078,8 @@ func main() {
 A Go string is a read-only slice of bytes. The language and the standard library treat strings specially - as containers 
 of text encoded in UTF-8. In other languages, strings are made of “characters”. In Go, the concept of a character is 
 called a rune - it’s an integer that represents a Unicode code point. 
+
+![](images/StringsAndRunes.svg)
 
 ```go linenums="1"
 package main
@@ -2133,6 +2139,8 @@ func examineRune(r rune) {
 ### Generics
 
 Starting with version 1.18, Go has added support for **generics**, also known as type parameters.
+
+![](images/Generics.svg)
 
 ```go linenums="1"
 package main
@@ -2213,6 +2221,8 @@ func main() {
 
 It’s possible to use **custom types as errors** by implementing the `Error()` method on them.
 
+![](images/CustomError.svg)
+
 ```go linenums="1"
 package main
 
@@ -2251,7 +2261,7 @@ func main() {
 }
 ```
 
-1. A custom error type usualy has the suffix "Error".
+1. A custom error type usually has the suffix "Error".
 2. Adding this `Error` method makes `argError` implement the error interface.
 3. Return our custom error.
 4. `errors.As` is a more advanced version of `errors.Is`. It checks that a given error or any error in its chain matches a specific error type and converts to a value of that 
@@ -2271,6 +2281,8 @@ func main() {
 ### Goroutines
 
 A **goroutine** is a lightweight thread of execution.
+
+![](images/Concurrency.svg)
 
 ```go linenums="1"
 package main
@@ -2332,6 +2344,8 @@ done
 ### Channels
 
 **Channels** are the pipes that connect concurrent goroutines. You can send values into channels from one goroutine and receive those values into another goroutine.
+
+![](images/Channels.svg)
 
 ```go linenums="1"
 package main

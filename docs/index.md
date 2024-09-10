@@ -2385,6 +2385,8 @@ When we run the program the "ping" message is successfully passed from one gorou
 By default, channels are **unbuffered**, meaning that they will only accept sends (`chan <-`) if there is a corresponding receive (`<- chan`) ready to receive the sent value. 
 **Buffered** channels accept a **limited number** of values without a corresponding receiver for those values. This concept is similar to mailboxes in RTOS.
 
+![](images/Channel%20Buffering.svg)
+
 ```go linenums="1"
 package main
 
@@ -2416,6 +2418,8 @@ func main() {
 
 We can use channels to **synchronize** execution across goroutines. Here’s an example of using a blocking receive to wait for a goroutine to finish. When waiting for multiple
 goroutines to finish, you may prefer to use a **WaitGroup**.
+
+![](images/Channel%20Synchronization.svg)
 
 ```go linenums="1"
 package main
@@ -2459,6 +2463,8 @@ If you removed the `<- done` line from this program, the program would exit befo
 
 When using channels as function parameters, you can specify if a channel is meant to only send or receive values. This specificity increases the type-safety of the program.
 
+![](images/Channel%20Direction.svg)
+
 ```go linenums="1"
 package main
 
@@ -2494,6 +2500,8 @@ func main() {
 ### Select
 
 Go’s **select** lets you wait on multiple channel operations. Combining goroutines and channels with select is a powerful feature of Go.
+
+![](images/Select.svg)
 
 ```go linenums="1"
 package main
@@ -2546,6 +2554,8 @@ Note that the total execution time is only ~2 seconds since both the 1 and 2 sec
 
 **Timeouts** are important for programs that connect to external resources or that otherwise need to bound execution time. Implementing timeouts in Go is easy and elegant thanks
 to channels and select.
+
+![](images/Timeouts.svg)
 
 ```go linenums="1"
 package main
@@ -2602,6 +2612,8 @@ Running this program shows the first operation timing out and the second succeed
 
 Basic sends and receives on channels are blocking. However, we can use `select` with a default clause to implement **non-blocking** sends, receives, and even non-blocking multi-way 
 `selects`.
+
+![](images/Non-Blocking%20Channel%20Operations.svg)
 
 ```go linenums="1"
 package main

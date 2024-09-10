@@ -4356,6 +4356,7 @@ with time values in a standard format that is widely used in computing.</p>
 <p>Another key aspect of functions in Go is their ability to form closures, which we’ll look at next.</p>
 <h3 id="closures">Closures</h3>
 <p>Go supports <strong>anonymous functions</strong>, which can form <strong>closures</strong>. Anonymous functions are useful when you want to define a function inline without having to name it.</p>
+<p><img alt="" src="images/Closures.svg" /></p>
 <div class="language-go highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-38-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-38-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-38-3"> 3</a></span>
@@ -4411,6 +4412,7 @@ with time values in a standard format that is widely used in computing.</p>
 <p>The last feature of functions we’ll look at for now is recursion.</p>
 <h3 id="recursion">Recursion</h3>
 <p>Go supports <strong>recursive functions</strong>. Here’s a classic example.</p>
+<p><img alt="" src="images/Recursion.svg" /></p>
 <div class="language-go highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-39-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-39-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-39-3"> 3</a></span>
@@ -4472,6 +4474,7 @@ with time values in a standard format that is widely used in computing.</p>
 <p>A Go string is a read-only slice of bytes. The language and the standard library treat strings specially - as containers 
 of text encoded in UTF-8. In other languages, strings are made of “characters”. In Go, the concept of a character is 
 called a rune - it’s an integer that represents a Unicode code point. </p>
+<p><img alt="" src="images/StringsAndRunes.svg" /></p>
 <div class="language-go highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-40-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-40-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-40-3"> 3</a></span>
@@ -4567,6 +4570,7 @@ called a rune - it’s an integer that represents a Unicode code point. </p>
 </ol>
 <h3 id="generics">Generics</h3>
 <p>Starting with version 1.18, Go has added support for <strong>generics</strong>, also known as type parameters.</p>
+<p><img alt="" src="images/Generics.svg" /></p>
 <div class="language-go highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-41-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-41-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-41-3"> 3</a></span>
@@ -4695,6 +4699,7 @@ the types of the arguments based on the context in which the function is called,
 </details>
 <h3 id="custom-errors">Custom Errors</h3>
 <p>It’s possible to use <strong>custom types as errors</strong> by implementing the <code>Error()</code> method on them.</p>
+<p><img alt="" src="images/CustomError.svg" /></p>
 <div class="language-go highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-42-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-42-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-42-3"> 3</a></span>
@@ -4766,7 +4771,7 @@ the types of the arguments based on the context in which the function is called,
 </span><span id="__span-42-35"><a id="__codelineno-42-35" name="__codelineno-42-35"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <ol>
-<li>A custom error type usualy has the suffix "Error".</li>
+<li>A custom error type usually has the suffix "Error".</li>
 <li>Adding this <code>Error</code> method makes <code>argError</code> implement the error interface.</li>
 <li>Return our custom error.</li>
 <li><code>errors.As</code> is a more advanced version of <code>errors.Is</code>. It checks that a given error or any error in its chain matches a specific error type and converts to a value of that 
@@ -4786,6 +4791,7 @@ resilient to errors and that provides better error handling and reporting.</p>
 </details>
 <h3 id="goroutines">Goroutines</h3>
 <p>A <strong>goroutine</strong> is a lightweight thread of execution.</p>
+<p><img alt="" src="images/Concurrency.svg" /></p>
 <div class="language-go highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-43-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-43-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-43-3"> 3</a></span>
@@ -4867,6 +4873,7 @@ make it easy to write efficient and scalable programs.</p>
 </div>
 <h3 id="channels">Channels</h3>
 <p><strong>Channels</strong> are the pipes that connect concurrent goroutines. You can send values into channels from one goroutine and receive those values into another goroutine.</p>
+<p><img alt="" src="images/Channels.svg" /></p>
 <div class="language-go highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-45-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-45-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-45-3"> 3</a></span>
@@ -4914,6 +4921,7 @@ goroutines in a Go program.</p>
 <h3 id="channel-buffering">Channel Buffering</h3>
 <p>By default, channels are <strong>unbuffered</strong>, meaning that they will only accept sends (<code>chan &lt;-</code>) if there is a corresponding receive (<code>&lt;- chan</code>) ready to receive the sent value. 
 <strong>Buffered</strong> channels accept a <strong>limited number</strong> of values without a corresponding receiver for those values. This concept is similar to mailboxes in RTOS.</p>
+<p><img alt="" src="images/Channel%20Buffering.svg" /></p>
 <div class="language-go highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-46-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-46-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-46-3"> 3</a></span>
@@ -4956,6 +4964,7 @@ for managing the flow of data between goroutines.</p>
 <h3 id="channel-synchronization">Channel Synchronization</h3>
 <p>We can use channels to <strong>synchronize</strong> execution across goroutines. Here’s an example of using a blocking receive to wait for a goroutine to finish. When waiting for multiple
 goroutines to finish, you may prefer to use a <strong>WaitGroup</strong>.</p>
+<p><img alt="" src="images/Channel%20Synchronization.svg" /></p>
 <div class="language-go highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-47-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-47-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-47-3"> 3</a></span>
@@ -5015,6 +5024,7 @@ manage the flow of data between them.</p>
 </details>
 <h3 id="channel-directions">Channel Directions</h3>
 <p>When using channels as function parameters, you can specify if a channel is meant to only send or receive values. This specificity increases the type-safety of the program.</p>
+<p><img alt="" src="images/Channel%20Direction.svg" /></p>
 <div class="language-go highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-48-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-48-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-48-3"> 3</a></span>
@@ -5067,6 +5077,7 @@ enforce the correct usage of channels and to improve the reliability and robustn
 </details>
 <h3 id="select">Select</h3>
 <p>Go’s <strong>select</strong> lets you wait on multiple channel operations. Combining goroutines and channels with select is a powerful feature of Go.</p>
+<p><img alt="" src="images/Select.svg" /></p>
 <div class="language-go highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-49-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-49-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-49-3"> 3</a></span>
@@ -5143,6 +5154,7 @@ efficient and scalable concurrent programs.</p>
 <h3 id="timeouts">Timeouts</h3>
 <p><strong>Timeouts</strong> are important for programs that connect to external resources or that otherwise need to bound execution time. Implementing timeouts in Go is easy and elegant thanks
 to channels and select.</p>
+<p><img alt="" src="images/Timeouts.svg" /></p>
 <div class="language-go highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-50-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-50-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-50-3"> 3</a></span>
@@ -5228,6 +5240,7 @@ blocking your program. Timeouts are an important feature of Go programs that hel
 <h3 id="non-blocking-channel-operations">Non-Blocking Channel Operations</h3>
 <p>Basic sends and receives on channels are blocking. However, we can use <code>select</code> with a default clause to implement <strong>non-blocking</strong> sends, receives, and even non-blocking multi-way 
 <code>selects</code>.</p>
+<p><img alt="" src="images/Non-Blocking%20Channel%20Operations.svg" /></p>
 <div class="language-go highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-51-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-51-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-51-3"> 3</a></span>

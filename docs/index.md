@@ -10,15 +10,18 @@ hide:
 !!! goals "In this hands-on you will learn the basic concepts and syntax of the Go programming language."
 
     - You are able to develop **simple applications** using the **Go** programming language.
-    - You can compile and run **Go** programs on your local machine and on a **Raspberry Pi** remotely.
+    - You can compile and run **Go** programs on your machine.
     - You have chosen an **IDE** for developing **Go** applications for yourself and know how to use it.
 
-    Note that this course is not a complete and comprehensive guide to the Go programming language. It is designed to provide you with a basic understanding of Go and help you get
-    started with Go for this course. If you want to learn more about Go, you can refer to the official Go documentation and other online resources. This guide is not for 
-    beginners, but for people who already have some decent programming experience. 
+Note that this course is not a complete and comprehensive guide to the Go programming language. It is designed to provide you with a basic understanding of Go and help you get
+started with Go for this course. If you want to learn more about Go, you can refer to the official Go documentation and other online resources. This guide is not for 
+beginners, but for people who already have some decent programming experience. 
+
+The course is heavily inspired by the [Go by Example](https://gobyexample.com/){target="blank_"} website. The website offers even more examples and explanations about the Go
+programming language. If you want to learn more about Go, you should definitely check it out.
 
 !!! duration "The hands-on should be completed in 2-4 hours"
-    AS it is a repetition of the theory session, the time to spend on this should not exceed **4 hours**.
+    As this is a repetition of the theory session, the time to spend on this should not exceed **4 hours**.
 
 ??? tip "Read tips, they are really useful!"
     Through this hands-on, we provide **useful tips** that might help you during the project. These tips are always provided in boxes like this one.
@@ -223,7 +226,14 @@ While Go can be developed using any text editor, there are several IDEs and edit
     ![](images/GoLand.webp)
     
     GoLand is a full-featured IDE specifically designed for Go development, offering advanced features and tools for writing, testing, and debugging Go code. You can download GoLand 
-    from the JetBrains website [https://www.jetbrains.com/go/](https://www.jetbrains.com/go/). GoLand is not free software, but it is free for students and open-source projects.
+    from the JetBrains website [https://www.jetbrains.com/go/](https://www.jetbrains.com/go/){target="blank_"}. GoLand is not free software, but it is free for students and open-source projects.
+
+??? tip "Zed"
+    ![](images/Zed.png)
+    
+    Zed is a lightweight and fast code editor with built-in support for Go development. You can download Zed from the official website 
+    [https://zed.dev](https://zed.dev){target="blank_"}. Zed is free and open-source software, making it an excellent choice for developers looking for a simple and efficient 
+    code editor. Zed does not offer remote development capabilities yet (The unstable preview version actually does), but it is a good choice for local development.
 
 ??? tip "Visual Studio Code"
     ![](images/VisualStudioCode.png)
@@ -239,6 +249,7 @@ While Go can be developed using any text editor, there are several IDEs and edit
     - Install the IDE aling with the necessary extensions or plugins for Go support.
     - Familiarize yourself with the basic features and tools available in your chosen IDE.
 
+    We assume that that from this point on, you are able to create new go projects and run them in your IDE.
 
 ## Basic Syntax
 
@@ -248,70 +259,77 @@ Our first program will print the classic “hello world” message. Here is the 
 
 ![](images/Hello%20World.svg)
 
-```go linenums="1"
-package main // (1)!
-
-import "fmt" // (2)!
-
-func main() { // (3)!
-    fmt.Println("hello world") // (4)!
-}
+```go linenums="1" title="hello.go"
+--8<-- "examples/HelloWorld/hello.go"
 ```
 
 1. Every Go file starts with a `package` declaration. In this case, we use the `main` package, which is the entry point for the executable program.
 2. We import the `fmt` package, which contains functions for formatting text and printing output. The `fmt.Println` function is used to print messages to the console.
 3. The `main` function is the entry point for the program. When the program is executed, the code inside the `main` function is executed sequentially.
 4. The `fmt.Println` function is used to print the message "hello world" to the console.
+5. A Go `main()` function does not require a return statement.
 
-To run the program, put the code in `hello-world.go` and use `go run`.
+??? output "Program output"
+    ```
+    hello world
+    ```
+
+To run the program, put the code in `hello.go` and use `go run`.
 
 ```sh
-$ go run hello-world.go
+$ go run hello.go
 ```
 
 ??? important "Go programs can be run using the `go run` command."
     To run a Go program, you can use the `go run` command followed by the name of the Go file. This command compiles and runs the program in a single step, making it easy to test 
     and execute Go code. Using an IDE with built-in support for Go development can also simplify the process of running Go programs.
 
-Sometimes we want to build our programs into binaries. We can do this using `go build`.
+Sometimes we want to build our programs into binaries that can be run without the need of a Go installation. We can do this using `go build`.
 
 ```sh
-$ go build hello-world.go
+$ go build hello.go
 ```
 
-We can then execute the built binary directly.
+This will create an executable binary file named `hello` that can be run directly. If you use just Go native libraries in your application, the binary will be self-contained and
+can be run on any machine without the need of a Go installation or any other library dependency.
+
+So we can run the executable binary directly using:
 
 ```sh
-$ ./hello-world
+$ ./hello
+```
+
+If we want to build the binary with a different name, we can use the `-o` flag:
+
+```sh
+$ go build -o hw hello.go
+```
+
+Now the executable binary will be named `hw` and can be run using:
+
+```sh
+$ ./hw
 ```
 
 ??? important "Go programs can be compiled into binaries using the `go build` command."
     The `go build` command compiles a Go program into an executable binary file. This binary can be run directly on the target platform without the need for the Go runtime. The 
-    resulting binary file will have the same name as the Go source file without the `.go` extension.
+    resulting binary file will have the same name as the Go source file without the `.go` extension by default. The flag `-o` allows you to specify a custom name for the binary.
+
+??? tip "Go binaries are self-contained and can be run on any machine."
+    Go binaries are self-contained and do not require the Go runtime to be installed on the target machine. This makes it easy to distribute and run Go programs on different 
+    platforms without worrying about dependencies or compatibility issues. The resulting binary file can be executed directly on any machine that supports the target platform.
 
 
 ### Values
 
-Go has various **value** types including strings, integers, floats, booleans, etc. Here are a few basic examples.
+Go has various **value** types including **strings**, **integers**, **floats**, **booleans**, etc.
 
 ![](images/Values.svg)
 
+Here are a few basic examples of values in Go: 
+
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func main() {
-
-    fmt.Println("go" + "lang")  // (1)!
-
-    fmt.Println("2+2 =", 2+2) // (2)!
-    fmt.Println("7.0/3.0 =", 7.0/3.0) // (3)!
-
-    fmt.Println(true && false) // (4)!
-    fmt.Println(true || false)
-    fmt.Println(!true)
-}
+--8<-- "examples/Values/main.go"
 ```
 
 1. Strings, which can be added together with +.
@@ -319,33 +337,27 @@ func main() {
 3. Floats.
 4. Booleans, with boolean operators as you’d expect.
 
+??? output "Program output"
+    ```
+    golang
+    2+2 = 4
+    7.0/3.0 = 2.3333333333333335
+    false
+    true
+    false
+    ```
+
 ### Variables
 
 In Go, **variables** are explicitly declared and used by the compiler to e.g. check type-correctness of function calls.
 
 ![](images/Variables.svg)
 
+The `var` statement declares one or multiple variables. While the keyword `var`is mandatory for package global variables, the `:=` syntax is a shorthand for declaring and 
+initializing a variable, e.g. `var f string = "apple"` can be replaced by `f := "apple"`. In that case, Go will infer the type of initialized variables.
+
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func main() {
-    var a = "initial" // (1)!
-    fmt.Println(a)
-
-    var b, c int = 1, 2 // (2)!
-    fmt.Println(b, c)
-
-    var d = true // (3)!
-    fmt.Println(d)
-
-    var e int // (4)!
-    fmt.Println(e)
-
-    f := "apple" // (5)!
-    fmt.Println(f)
-}
+--8<-- "examples/Variables/main.go"
 ```
 
 1. `var` declares 1 or more variables.
@@ -354,55 +366,83 @@ func main() {
 4. Variables declared without a corresponding initialization are **zero-valued**. For example, the zero value for an int is 0.
 5. The `:=` syntax is shorthand for declaring and initializing a variable, e.g. for `var f string = "apple"` in this case. This syntax is only available inside functions.
 
+??? output "Program output"
+    ```
+    initial
+    1 2
+    true
+    0
+    apple
+    ```
+
+The basic data types in Go are:
+
+| Type          | Description                                                                                                                   |
+|---------------|-------------------------------------------------------------------------------------------------------------------------------|
+| `bool`        | The boolean type, which represents true or false values.                                                                      |
+| `string`      | The string type, which represents a sequence of characters.                                                                   |
+| `int`         | The integer type, which represents whole numbers. Note that the size of `int` depends on the platform.                        |
+| `int8`        | The 8-bit integer type, which represents whole numbers in the range -128 to 127.                                              |
+| `int16`       | The 16-bit integer type, which represents whole numbers in the range -32768 to 32767.                                         |
+| `int32`       | The 32-bit integer type, which represents whole numbers in the range -2147483648 to 2147483647.                               |
+| `int64`       | The 64-bit integer type, which represents whole numbers in the range -9223372036854775808 to 9223372036854775807.             |
+| `uint`        | The unsigned integer type, which represents non-negative whole numbers. Note that the size of `uint` depends on the platform. |
+| `uint8`       | The 8-bit unsigned integer type, which represents non-negative whole numbers in the range 0 to 255.                           |
+| `uint16`      | The 16-bit unsigned integer type, which represents non-negative whole numbers in the range 0 to 65535.                        |
+| `uint32`      | The 32-bit unsigned integer type, which represents non-negative whole numbers in the range 0 to 4294967295.                   |
+| `uint64`      | The 64-bit unsigned integer type, which represents non-negative whole numbers in the range 0 to 18446744073709551615.         |
+| `float32`     | The 32-bit floating-point type, which represents decimal numbers with single precision.                                       |
+| `float64`     | The 64-bit floating-point type, which represents decimal numbers with double precision.                                       |
+| `byte`        | The byte type, which is an alias for `uint8` and represents a single byte.                                                    |
+| `rune`        | The rune type, which is an alias for `int32` and represents a Unicode code point.                                             |
+| `uintptr`     | The unsigned integer type, which is large enough to hold the bit pattern of any pointer.                                      |
+| `error`       | The error type, which represents an error value that can be returned from functions.                                          |
+| `interface{}` | The empty interface type, which represents an interface with no methods.                                                      |
+
 ??? important "Go is a statically typed language."
-    Go is a statically typed language, which means that variable types are known at compile time. This allows the compiler to catch type-related errors early in the development 
+    Go is a **statically typed** language, which means that variable types are known at compile time. This allows the compiler to catch type-related errors early in the development 
     process, improving code reliability and maintainability.
 
 ??? important "Go uses type inference."
-    Go supports type inference, which allows the compiler to infer the type of a variable based on its initialization value. This reduces the need for explicit type declarations and 
-    makes the code more concise and readable.
+    Go supports **type inference**, which allows the compiler to infer the type of a variable based on its initialization value. This reduces the need for explicit type declarations and 
+    makes the code more concise and readable. Type inference is commonly used in Go to declare variables without specifying their types explicitly. `:=` is used for type inference.
 
 ??? important "Go variables are zero-valued by default."
     In Go, variables declared without an explicit initialization value are **zero-valued**. The zero value of a variable depends on its type, such as 0 for integers, false for 
     booleans, and "" for strings.
 
-??? tip "Go supports short variable declarations."
-    Go provides a shorthand syntax for declaring and initializing variables using the `:=` operator. This syntax is commonly used to declare and initialize variables within functions 
-    without explicitly specifying the type.
+??? important "There is no implicit type conversion in Go."
+    Go does not allow implicit type conversion between different types (like in C++). This means that you cannot assign a value of one type to a variable of another type without 
+    an explicit conversion. This helps prevent type-related errors and ensures type safety in Go programs.
+
+??? tip "Go supports short variable declarations using `:=`."
+    Go provides a **shorthand syntax** for declaring and initializing variables using the `:=` operator. This syntax is commonly used to declare and initialize variables within 
+    functions without explicitly specifying the type (type inference).
+
+??? tip "Go variables must be used."
+    In Go, variables that are declared but not used will result in a **compilation error**. This helps ensure that all variables are used correctly and prevents unused variables from 
+    cluttering the codebase.
+
+??? tip "You can declare multiple package global variables inside a `var` block."
+    Go allows you to declare multiple global variables inside a `var` block. This can be useful for grouping related variables together and improving code readability. Example:
+
+    ```go
+    var (
+        a int32
+        b float64
+    )
+    ```
 
 ### Constants
 
-Go supports **constants** of character, string, boolean, and numeric values.
+Go supports **constants** of **character**, **string**, **boolean**, and **numeric** values.
 
 ![](images/Constants.svg)
 
+Constants are declared like variables, but with the `const` keyword.
+
 ```go linenums="1"
-package main
-
-import (
-    "fmt"
-    "math"
-)
-
-const s string = "constant" // (1)!
-
-const ( // (2)!
-	c1 = 7
-	c2 = 42
-)
-
-func main() {
-    fmt.Println(s)
-
-    const n = 500000000 // (3)!
-
-    const d = 3e20 / n // (4)!
-    fmt.Println(d)
-
-    fmt.Println(int64(d)) // (5)!
-
-    fmt.Println(math.Sin(n)) // (6)!
-}
+--8<-- "examples/Constants/main.go"
 ```
 
 1. `const` declares a constant value.
@@ -412,6 +452,16 @@ func main() {
 5. A numeric constant has no type until it’s given one, such as by an explicit conversion.
 6. number can be given a type by using it in a context that requires one, such as a variable assignment or function call. For example, here math.Sin expects a float64.
 
+??? output "Program output"
+    ```
+    constant
+    6e+11
+    600000000000
+    -0.28470407323754404
+    ```
+
+Go provides the following built-in numeric constants like `math.Pi`, `math.E`, `math.Phi`, and `math.Sqrt2` in the `math`package.
+
 ??? important "Go constants are immutable."
     Go constants are immutable values that cannot be changed or reassigned once they are declared. This immutability ensures that constants retain their values throughout the 
     program's execution, making them suitable for defining fixed values that should not be modified.
@@ -420,45 +470,20 @@ func main() {
     Unlike variables, Go constants do not have an explicit type until they are used in a context that requires one. This allows constants to be used in a flexible manner without 
     being tied to a specific type until necessary.
 
+??? important "Go constants are evaluated at compile time."
+    Go constants are evaluated at compile time, which means that constant expressions are computed and resolved during the compilation process. This ensures that constants are 
+    resolved efficiently and accurately without runtime overhead.
+
 ### For
 
-`for` is Go’s only looping construct. Here are some basic types of for loops.
+`for` is Go’s only looping construct. 
 
 ![](images/For.svg)
 
+Here are some basic types of `for` loops:
+
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func main() {
-
-    i := 1 // (1)!
-    for i <= 3 {
-        fmt.Println(i)
-        i = i + 1
-    }
-
-    for j := 0; j < 3; j++ { //(2)!
-        fmt.Println(j)
-    }
-
-    for i := range 3 { // (3)!
-        fmt.Println("range", i)
-    }
-
-    for { // (4)!
-        fmt.Println("loop")
-        break
-    }
-
-    for n := range 6 { //(5)!
-        if n%2 == 0 {
-            continue
-        }
-        fmt.Println(n)
-    }
-}
+--8<-- "examples/For/main.go"
 ```
 
 1. The most basic type, with a single condition.
@@ -467,8 +492,32 @@ func main() {
 4. `for` without a condition will loop repeatedly until you `break` out of the loop or `return` from the enclosing function.
 5. You can also `continue` to the next iteration of the loop.
 
-!!! tip "We’ll see some other for forms later when we look at range statements, channels, and other data structures."
+??? output "Program output"
+    ```
+    1
+    2
+    3
+    0
+    1
+    2
+    range 0
+    range 1
+    range 2
+    loop
+    1
+    3
+    5
+    ```
 
+??? important "Go has only one looping construct: the `for` loop."
+    Go has only one looping construct: the `for` loop. The `for` loop in Go is flexible and powerful, allowing you to create a wide range of loop patterns using different 
+    combinations of loop conditions, initializations, and post-statements.
+
+??? important "In go, for loop headers do not need to be surrounded by parentheses."
+    In Go, the `for` loop headers do not need to be surrounded by parentheses, unlike some other programming languages. This makes the loop syntax more concise and readable, 
+    especially for simple loop conditions. However go requires braces `{}` around the loop body.
+
+!!! tip "We’ll see some other for forms later when we look at range statements, channels, and other data structures."
 
 ### If/Else
 
@@ -476,35 +525,10 @@ Branching with `if` and `else` in Go is straight-forward.
 
 ![](images/IfElse.svg)
 
+Here are some basic examples:
+
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func main() {
-
-    if 7%2 == 0 { // (1)!
-        fmt.Println("7 is even")
-    } else {
-        fmt.Println("7 is odd")
-    }
-
-    if 8%4 == 0 { // (2)!
-        fmt.Println("8 is divisible by 4")
-    }
-
-    if 8%2 == 0 || 7%2 == 0 { // (3)!
-        fmt.Println("either 8 or 7 are even")
-    }
-
-    if num := 9; num < 0 { // (4)!
-        fmt.Println(num, "is negative")
-    } else if num < 10 {
-        fmt.Println(num, "has 1 digit")
-    } else {
-        fmt.Println(num, "has multiple digits")
-    }
-}
+--8<-- "examples/IfElse/main.go"
 ```
 
 1. Here’s a basic example.
@@ -512,11 +536,28 @@ func main() {
 3. Logical operators like `&&` and `||` are often useful in conditions.
 4. A statement can precede conditionals; any variables declared in this statement are available in the current and all subsequent branches.
 
-??? important "Go has no ternary if"
-    Go does not have a ternary `if`, so you’ll need to use a full `if` statement even for basic conditions.
+??? output "Program output"
+    ```
+    7 is odd
+    8 is divisible by 4
+    either 8 or 7 are even
+    9 has 1 digit
+    ```
 
-??? tip "You don’t need parentheses around conditions in Go"
-    Parentheses are not required around conditions in Go, but braces are always required.
+??? important "Go requires braces around the body of the `if` and `else` blocks."
+    In Go, the body of the `if` and `else` blocks must be enclosed in braces `{}`. This is a syntactic requirement in Go to ensure that the code is well-structured and readable. 
+    The use of braces also helps prevent common errors related to block scoping and conditional logic. However the `()` brackets around the condition are optional.
+
+??? important "Go has no ternary if"
+    Go does not have a ternary `if`, so you’ll need to use a full `if` statement even for basic conditions. This is a deliberate design choice in Go to promote code readability and
+    maintainability by avoiding complex and nested ternary expressions. If you really need a ternary operator, you can use a map to simulate it:
+
+    ```go
+    value := map[bool]int{true: 1, false: 0}[condition]
+    ```
+    
+    In the example code above, the `value` variable will be assigned the value `1` if the `condition` is `true`, and `0` if the `condition` is `false`.
+
 
 ### Switch
 
@@ -524,56 +565,14 @@ func main() {
 
 ![](images/Switch.svg)
 
+Switch statements in Go are similar to those in C, C++, Java, JavaScript, and other languages. A big difference is that Go only runs the selected case, not all the cases that 
+follow like the languages mentioned before. This is a feature that helps avoid common bugs when the developer forgets to add a `break` statement. If you want to fall through to
+the next case, you need to use the `fallthrough` statement.
+
+Here are some basic examples:
+
 ```go linenums="1"
-package main
-
-import ( // (1)!
-    "fmt"
-    "time"
-)
-
-func main() {
-
-    i := 2
-    fmt.Print("Write ", i, " as ")
-    switch i { // (2)!
-    case 1:
-        fmt.Println("one")
-    case 2:
-        fmt.Println("two")
-    case 3:
-        fmt.Println("three")
-    }
-
-    switch time.Now().Weekday() { // (3)!
-    case time.Saturday, time.Sunday:
-        fmt.Println("It's the weekend")
-    default:
-        fmt.Println("It's a weekday")
-    }
-
-    t := time.Now()
-    switch { // (4)!
-    case t.Hour() < 12:
-        fmt.Println("It's before noon")
-    default:
-        fmt.Println("It's after noon")
-    }
-
-    whatAmI := func(i interface{}) { // (5)!
-        switch t := i.(type) {
-        case bool:
-            fmt.Println("I'm a bool")
-        case int:
-            fmt.Println("I'm an int")
-        default:
-            fmt.Printf("Don't know type %T\n", t)
-        }
-    }
-    whatAmI(true)
-    whatAmI(1)
-    whatAmI("hey")
-}
+--8<-- "examples/Switch/main.go"
 ```
 
 1. Imports can be grouped into a parenthesized, "factored" import statement.
@@ -583,6 +582,16 @@ func main() {
 5. A type `switch` compares types instead of values. You can use this to discover the type of an interface value. In this example, the variable `t` will have the type corresponding 
    to its clause.
 
+??? output "Program output"
+    ```
+    Write 2 as two
+    It's a weekday
+    It's after noon
+    I'm a bool
+    I'm an int
+    Don't know type string
+    ```
+
 ??? important "Go’s switch cases break automatically"
     In Go, the `break` statement is not required in each case of a `switch` statement. The switch cases break automatically after executing the corresponding code block, making it 
     easier to write concise and readable code. If you want to fall through to the next case, you can use the `fallthrough` statement.
@@ -590,6 +599,10 @@ func main() {
 ??? tip "A switch without expression is an alternate way to express if/else logic."
     Go allows you to use a `switch` statement without an expression, which is an alternate way to express if/else logic. This form of `switch` can be useful for writing concise 
     conditional statements based on complex conditions.
+
+??? tip "Go's switch statement does not need to be surrounded by parentheses."
+    In Go, the `switch` statement does not need to be surrounded by parentheses, unlike some other programming languages. This makes the switch syntax more concise and readable, 
+    especially for simple switch cases. The use of braces `{}` around the switch body however is required.
 
 ??? tip "Go’s type switch is a powerful feature for working with interfaces."
     Go’s type switch allows you to inspect the type of an interface value at runtime and take different actions based on the type. This feature is particularly useful when working 
@@ -602,33 +615,11 @@ In Go, an **array** is a numbered sequence of elements of a specific length. In 
 
 ![](images/Arrays.svg)
 
+Arrays in Go are similar to arrays in other languages like C, C++, and Java. However, Go arrays are fixed-length and zero-valued by default, meaning that each element of the array
+is initialized to the zero value of its type and the index is always checked on access.
+
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func main() {
-
-    var a [5]int // (1)!
-    fmt.Println("emp:", a)
-
-    a[4] = 100 // (2)!
-    fmt.Println("set:", a)
-    fmt.Println("get:", a[4])
-
-    fmt.Println("len:", len(a)) // (3)!
-
-    b := [5]int{1, 2, 3, 4, 5} // (4)!
-    fmt.Println("dcl:", b)
-
-    var twoD [2][3]int // (5)!
-    for i := 0; i < 2; i++ {
-        for j := 0; j < 3; j++ {
-            twoD[i][j] = i + j
-        }
-    }
-    fmt.Println("2d: ", twoD)
-}
+--8<-- "examples/Arrays/main.go"
 ```
 
 1. Here we create an array a that will hold exactly 5 ints. The type of elements and length are both part of the array’s type. By default an array is zero-valued, which for `ints` 
@@ -638,6 +629,16 @@ func main() {
 4. Use this syntax to declare and initialize an array in one line.
 5. Array types are one-dimensional, but you can compose types to build multi-dimensional data structures.
 
+??? output "Program output"
+    ```
+    emp: [0 0 0 0 0]
+    set: [0 0 0 0 100]
+    get: 100
+    len: 5
+    dcl: [1 2 3 4 5]
+    2d:  [[0 1 2] [1 2 3]]
+    ```
+
 ??? important "Arrays in Go are fixed-length and zero-valued by default."
     In Go, arrays are fixed-length sequences of elements with a specific type. The length of an array is part of its type, and arrays are zero-valued by default, meaning that each 
     element is initialized to the zero value of its type. The fixed-length nature of arrays makes them less flexible than slices, which can grow and shrink dynamically.
@@ -646,7 +647,7 @@ func main() {
     While arrays are a fundamental data structure in Go, they are rarely used directly in practice due to their fixed length and limited flexibility. Instead, slices are more 
     commonly used for working with sequences of elements in Go, as they provide a more dynamic and versatile interface to data.
 
-??? tip "Arrays appear in the form `[v1 v2 v3 ...]` when printed with `fmt.Println`."
+!!! tip "Arrays appear in the form `[v1 v2 v3 ...]` when printed with `fmt.Println`."
 
 
 ### Slices
@@ -655,65 +656,11 @@ func main() {
 
 ![](images/Slices.svg)
 
+Slices in Go can be compared to `std::vector` in C++. They can grow and shrink in size and provide a more flexible and dynamic way to work with sequences of elements. Slices are
+a key feature of Go and are widely used in Go programs for managing collections of data.
+
 ```go linenums="1"
-package main
-
-import (
-    "fmt"
-    "slices"
-)
-
-func main() {
-
-    var s []string // (1)!
-    fmt.Println("uninit:", s, s == nil, len(s) == 0)
-
-    s = make([]string, 3) // (2)!
-    fmt.Println("emp:", s, "len:", len(s), "cap:", cap(s))
-
-    s[0] = "a" // (3)!
-    s[1] = "b"
-    s[2] = "c"
-    fmt.Println("set:", s)
-    fmt.Println("get:", s[2])
-
-    fmt.Println("len:", len(s)) // (4)!
-
-    s = append(s, "d") // (5)!
-    s = append(s, "e", "f")
-    fmt.Println("apd:", s)
-
-    c := make([]string, len(s)) // (6)!
-    copy(c, s)
-    fmt.Println("cpy:", c)
-
-    l := s[2:5] // (7)!
-    fmt.Println("sl1:", l)
-
-    l = s[:5] // (8)!
-    fmt.Println("sl2:", l)
-
-    l = s[2:] // (9)!
-    fmt.Println("sl3:", l)
-
-    t := []string{"g", "h", "i"} // (10)!
-    fmt.Println("dcl:", t)
-
-    t2 := []string{"g", "h", "i"} // (11)!
-    if slices.Equal(t, t2) {
-        fmt.Println("t == t2")
-    }
-
-    twoD := make([][]int, 3) // (12)!
-    for i := 0; i < 3; i++ {
-        innerLen := i + 1
-        twoD[i] = make([]int, innerLen)
-        for j := 0; j < innerLen; j++ {
-            twoD[i][j] = i + j
-        }
-    }
-    fmt.Println("2d: ", twoD)
-}
+--8<-- "examples/Slices/main.go"
 ```
 
 1. Unlike arrays, slices are typed only by the elements they contain (not the number of elements). An uninitialized slice equals to nil and has length 0.
@@ -732,11 +679,32 @@ func main() {
 12. Slices can be composed into multi-dimensional data structures. The length of the inner slices can vary, unlike with multi-dimensional arrays.
 13. Note that while slices are different types than arrays, they are rendered similarly by `fmt.Println`.
 
+??? output "Program output"
+    ```
+    uninit: [] true true
+    em: [  ] le: 3 ca: 3
+    set: [a b c]
+    get: c
+    len: 3
+    apd: [a b c d e f]
+    cpy: [a b c d e f]
+    sl1: [c d e]
+    sl2: [a b c d e]
+    sl3: [c d e f]
+    dcl: [g h i]
+    t == t2
+    2d:  [[0] [1 2] [2 3 4]]
+    ```
+
 ??? important "Slices are the default when working with sequences in Go."
     Slices are more flexible than arrays in Go, providing a dynamic and versatile interface to sequences of elements. Slices can grow and shrink dynamically, making them suitable 
     for working with collections of varying sizes and lengths. Slices are commonly used in Go for managing sequences of elements efficiently. The functionality of slices is
     very similar to the one of `std::vector` in C++.
 
+??? important "Slices are typed by the elements they contain."
+    All elements of a slice have to be of the same type in Go. Using `interface{}` as the type of a slice allows you to store values of different types in the same slice, but you
+    will need to perform type assertions when accessing the values. Go generics can make this easier, as we see later here.
+ 
 ??? tip "Slices appear in the form `[v1 v2 v3 ...]` when printed with `fmt.Println`."
 
 
@@ -746,48 +714,11 @@ func main() {
 
 ![](images/Maps.svg)
 
+Maps are a powerful and versatile data structure in Go that allow you to store key/value pairs and efficiently retrieve values based on keys. Maps provide a convenient way to
+implement associative arrays, dictionaries, and other data structures that require fast lookups and retrievals.
+
 ```go linenums="1"
-package main
-
-import (
-    "fmt"
-    "maps"
-)
-
-func main() {
-
-    m := make(map[string]int) // (1)!
-
-    m["k1"] = 7 // (2)!
-    m["k2"] = 13
-
-    fmt.Println("map:", m) // (3)!
-
-    v1 := m["k1"] // (4)!
-    fmt.Println("v1:", v1)
-
-    v3 := m["k3"] // (5)!
-    fmt.Println("v3:", v3)
-
-    fmt.Println("len:", len(m)) // (6)!
-
-    delete(m, "k2") // (7)!
-    fmt.Println("map:", m)
-
-    clear(m) // (8)!
-    fmt.Println("map:", m)
-
-    _, prs := m["k2"] // (9)!
-    fmt.Println("prs:", prs)
-
-    n := map[string]int{"foo": 1, "bar": 2} // (10)!
-    fmt.Println("map:", n)
-
-    n2 := map[string]int{"foo": 1, "bar": 2}
-    if maps.Equal(n, n2) { // (11)!
-        fmt.Println("n == n2")
-    }
-}
+--8<-- "examples/Maps/main.go"
 ```
 
 1. To create an empty map, use the builtin `make`: `make(map[key-type]val-type)`.
@@ -803,11 +734,24 @@ func main() {
 10. You can also declare and initialize a new map in the same line with this syntax.
 11. The `maps` package contains a number of useful utility functions for maps.
 
+??? output "Program output"
+    ```
+    map: map[k1:7 k2:13]
+    v1: 7
+    v3: 0
+    len: 2
+    map: map[k1:7]
+    map: map[]
+    prs: false
+    map: map[bar:2 foo:1]
+    n == n2
+    ```
+
 ??? important "Maps are unordered collections of key/value pairs."
     Maps in Go are unordered collections of key/value pairs, where each key is unique within the map. Maps provide an efficient way to store and retrieve values based on a key, 
     making them suitable for implementing associative arrays and dictionaries.
 
-??? tip "Go maps are reference types."
+??? important "Go maps are reference types."
     Maps in Go are reference types, meaning that when you assign a map to a new variable or pass it as an argument to a function, you are working with a reference to the original 
     map. This allows you to modify the map's contents and have the changes reflected in all references to the map.
 
@@ -816,43 +760,14 @@ func main() {
 
 ### Range
 
-**range** iterates over elements in a variety of data structures. Let’s see how to use range with some of the data structures we’ve already learned.
+**range** iterates over elements in a variety of data structures.
 
 ![](images/Range.svg)
 
+Let’s see how to use range with some of the data structures we’ve already learned:
+
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func main() {
-
-    nums := []int{2, 3, 4} // (1)!
-    sum := 0
-    for _, num := range nums {
-        sum += num
-    }
-    fmt.Println("sum:", sum)
-
-    for i, num := range nums { // (2)!
-        if num == 3 {
-            fmt.Println("index:", i)
-        }
-    }
-
-    kvs := map[string]string{"a": "apple", "b": "banana"} // (3)!
-    for k, v := range kvs {
-        fmt.Printf("%s -> %s\n", k, v)
-    }
-
-    for k := range kvs { // (4)!
-        fmt.Println("key:", k)
-    }
-
-    for i, c := range "go" {
-        fmt.Println(i, c)
-    }   
-}
+--8<-- "examples/Range/main.go"
 ```
 
 1. Here we use `range` to sum the numbers in a slice. Arrays work like this too.
@@ -861,6 +776,18 @@ func main() {
 3. `range` on `map` iterates over key/value pairs.
 4. `range` can also iterate over just the keys of a map.
 5. `range` on `strings` iterates over Unicode code points. The first value is the starting byte index of the rune and the second the rune itself.
+
+??? output "Program output"
+    ```
+    sum: 9
+    index: 1
+    a -> apple
+    b -> banana
+    key: a
+    key: b
+    0 103
+    1 111
+    ```
 
 ??? important "The `range` keyword is used to iterate over elements in data structures."
     The `range` keyword in Go is used to iterate over elements in data structures such as arrays, slices, maps, and strings. The `range` keyword provides a convenient way to loop 
@@ -871,45 +798,52 @@ func main() {
     When using the `range` keyword, Go returns the index and value of each element in the data structure being iterated over. This allows you to access both the index and value of
     each element within the loop body.
 
+??? tip "The blank identifier `_` can be used to ignore the index or value in a `range` loop."
+    If you are not interested in the index or value returned by the `range` keyword, you can use the blank identifier `_` to ignore the value. This allows you to focus on the 
+    elements that are relevant to your code and avoid unnecessary variables.
+
 
 ### Functions
 
-**Functions** are central in Go. We’ll learn about functions with a few different examples.
+**Functions** are central in Go.
 
 ![](images/Functions.svg)
 
+We’ll learn about functions with a few different examples:
+
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func plus(a int, b int) int { // (1)!
-
-    return a + b // (2)!
-}
-
-func plusPlus(a, b, c int) int { // (3)!
-    return a + b + c
-}
-
-func main() {
-
-    res := plus(1, 2) // (4)!
-    fmt.Println("1+2 =", res)
-
-    res = plusPlus(1, 2, 3)
-    fmt.Println("1+2+3 =", res)
-}
+--8<-- "examples/Functions/main.go"
 ```
 
 1. Here’s a function that takes two `ints` and returns their sum as an `int`.
 2. Go requires explicit `returns`, i.e. it won’t automatically return the value of the last expression.
 3. When you have multiple consecutive parameters of the same type, you may omit the type name for the like-typed parameters up to the final parameter that declares the type.
+   A function can return any number of results, in this case the result and an error value.
 4. Call a function just as you’d expect, with `name(args)`.
+5. You can save a function to a variable and call the function through that variable.
+6. You can define an `init()` function for each package. `init()` functions are executed automatically when the package is initialized (even before main is called), and they are 
+   commonly used for setting up package-level variables and performing initialization tasks.
+
+??? output "Program output"
+    ```
+    init() called
+    1+2 = 3
+    1+2+3 = 6
+    3
+    ```
 
 ??? important "Go functions are first-class citizens."
     Functions in Go are first-class citizens, meaning that functions can be assigned to variables, passed as arguments to other functions, and returned from other functions. This 
     flexibility allows you to work with functions in a similar way to other data types, making functions a powerful and versatile feature of the language.
+
+??? tip "The `init()` function is used for package initialization tasks."
+    The `init()` function in Go is a special function that is executed automatically when the package is initialized. The `init()` function is commonly used for performing 
+    initialization tasks, setting up package-level variables, and executing code that needs to run before the `main()` function is called. The `init()` function is executed only 
+    once per package, even if the package is imported multiple times.
+
+??? tip "Go return values can be ignored us the blank identifier `_`."
+    If you are not interested in the return value of a function, you can use the blank identifier `_` to ignore the value. This allows you to focus on the values that are relevant 
+    to your code and avoid unnecessary variables.
 
 
 ### Multiple Return Values
@@ -918,29 +852,22 @@ Go has built-in support for **multiple return values**. This feature is used oft
 
 ![](images/Multiple%20Return%20Values.svg)
 
+Lets look at a function that returns 2 values:
+
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func vals() (int, int) { // (1)!
-    return 3, 7
-}
-
-func main() {
-
-    a, b := vals() // (2)!
-    fmt.Println(a)
-    fmt.Println(b)
-
-    _, c := vals() // (3)!
-    fmt.Println(c)
-}   
+--8<-- "examples/MultipleReturnValues/main.go"
 ```
 
 1. The `(int, int)` in this function signature shows that the function returns 2 `ints`.
 2. Here we use the 2 different return values from the call with multiple assignment.
 3. If you only want a subset of the returned values, use the blank identifier `_`.
+
+??? output "Program output"
+    ```
+    3
+    7
+    7
+    ```
 
 ??? important "Go functions can return multiple values."
     Go functions can return multiple values, allowing you to return more than one result from a function. This feature is commonly used to return both the result of a computation 
@@ -961,35 +888,18 @@ func main() {
 
 ### Pointers
 
-Go supports **pointers**, allowing you to pass references to values and records within your program.
+For all those who thought that Go would save them from using pointers, here is some bad news: Go does not only supports **pointers**, they are used quite regularly.
 
 ![](images/Pointers.svg)
 
+Pointers allow you to pass references to values and records within your program. This can be more efficient than passing values directly, especially for large data structures.
+If a function needs to modify a variable, a pointer to the variable must be passed to the function.
+
+In contrast to C and C++, Go does not need you to manage your memory manually. The garbage collector takes care of that for you, so no memory leaks or invalid memory accesses
+should occur. However, you still can reference a nil pointer, which will cause a runtime panic.
+
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func zeroval(ival int) { // (1)!
-    ival = 0
-}
-
-func zeroptr(iptr *int) { // (2)!
-    *iptr = 0
-}
-
-func main() {
-    i := 1
-    fmt.Println("initial:", i)
-
-    zeroval(i)
-    fmt.Println("zeroval:", i)
-
-    zeroptr(&i) // (3)!
-    fmt.Println("zeroptr:", i)
-
-    fmt.Println("pointer:", &i) // (4)!
-}
+--8<-- "examples/Pointers/main.go"
 ```
 
 1. We’ll show how pointers work in contrast to values with 2 functions: `zeroval` and `zeroptr`. `zeroval` has an `int` parameter, so arguments will be passed to it by value.
@@ -998,6 +908,14 @@ func main() {
    address to the current value at that address. Assigning a value to a dereferenced pointer changes the value at the referenced address.
 3. The `&i` syntax gives the memory **address** of `i`, i.e. a pointer to `i`.
 4. Pointers can be printed too.
+
+??? output "Program output"
+    ```
+    initial: 1
+    zeroval: 1
+    zeroptr: 0
+    pointer: 0x14000110018
+    ```
 
 `zeroval` doesn’t change the `i` in `main`, but `zeroptr` does because it has a reference to the memory address for that variable.
 
@@ -1015,7 +933,7 @@ func main() {
 
 ??? tip "Memory allocation in Go is managed by the garbage collector."
     Go uses a garbage collector to manage memory allocation and deallocation, which means that you do not need to manually allocate or deallocate memory in Go. The garbage collector 
-    automatically reclaims memory that is no longer in use, making memory management easier and more reliable in Go.
+    automatically reclaims memory that is no longer in use, making memory management easier and more reliable in Go. Dereferencing nil pointers still gets you what you deserve...
 
 
 ### Structs
@@ -1024,51 +942,11 @@ Go’s **structs** are typed collections of fields. They’re useful for groupin
 
 ![](images/Structs.svg)
 
+Structs in Go behave very similar to structs in C, C++, and other languages. They allow you to define custom data types that group together related fields and values. Structs are
+used to represent objects and entities in a program, enabling you to create complex data structures with multiple fields and values.
+
 ```go linenums="1"
-package main
-
-import "fmt"
-
-type person struct { // (1)!
-    name string
-    age  int
-}
-
-func newPerson(name string) *person { // (2)!
-    p := person{name: name}
-    p.age = 42
-    return &p // (3)!
-}
-
-func main() {
-    fmt.Println(person{"Bob", 20}) // (4)!
-
-    fmt.Println(person{name: "Alice", age: 30}) // (5)!
-
-    fmt.Println(person{name: "Fred"}) // (6)!
-
-    fmt.Println(&person{name: "Ann", age: 40}) // (7)!
-
-    fmt.Println(newPerson("Jon")) // (8)!
-
-    s := person{name: "Sean", age: 50}
-    fmt.Println(s.name) // (9)!
-
-    sp := &s
-    fmt.Println(sp.age) // (10)!
-
-    sp.age = 51 // (11)!
-    fmt.Println(sp.age)
-
-    dog := struct { // (12)!
-        name   string
-        isGood bool
-    }{
-        "Rex",
-        true,
-    }
-    fmt.Println(dog)
-}
+--8<-- "examples/Structs/main.go"
 ```
 
 1. This `person` struct type has `name` and `age` fields.
@@ -1084,6 +962,19 @@ func main() {
 11. Structs are mutable.
 12. If a struct type is only used for a single value, we don’t have to give it a name. The value can have an **anonymous struct type**.
 
+??? output "Program output"
+    ```
+    {Bob 20}
+    {Alice 30}
+    {Fred 0}
+    &{Ann 40}
+    &{Jon 42}
+    Sean
+    50
+    51
+    {Rex true}
+    ```
+
 ??? important "Go structs can be used to define custom data types."
     Go structs are used to define custom data types that group together related fields and values. Structs allow you to create complex data structures with multiple fields and 
     values, enabling you to represent objects and entities in a program. Structs in Go are very similar to structs in C.
@@ -1092,6 +983,11 @@ func main() {
     Go structs are typed collections of fields that allow you to group data together to form records. Structs are used to define custom data types in Go, enabling you to create 
     complex data structures with multiple fields and values. Structs are a fundamental feature of Go and are commonly used to represent objects and entities in a program.
 
+??? tip "Field visibility is controlled by the first letter of the field name."
+    As we see later, the visibility of struct fields is controlled by the first letter of the field name. Fields that start with an uppercase letter are **exported** and can be 
+    accessed from outside the package, while fields that start with a lowercase letter are **unexported** and can only be accessed from within the package. This convention helps 
+    enforce encapsulation and data hiding in Go programs.
+
 
 ### Methods
 
@@ -1099,42 +995,29 @@ Go supports **methods** defined on struct types.
 
 ![](images/Methods.svg)
 
+In contrast to C++, Go does not have classes. However, you can define methods on struct types. Methods in Go are functions that are associated with a specific struct type, allowing
+you to define custom behavior for struct values. Methods provide a way to encapsulate behavior and functionality within a struct type, making it easier to work with struct values
+and objects.
+
 ```go linenums="1"
-package main
-
-import "fmt"
-
-type rect struct {
-    width, height int
-}
-
-func (r *rect) area() int { // (1)!
-    return r.width * r.height
-}
-
-func (r rect) perim() int { // (2)!
-    return 2*r.width + 2*r.height
-}
-
-func main() {
-    r := rect{width: 10, height: 5}
-
-    fmt.Println("area: ", r.area()) // (3)!
-    fmt.Println("perim:", r.perim())
-
-    rp := &r // (4)!
-    fmt.Println("area: ", rp.area())
-    fmt.Println("perim:", rp.perim())
-}
+--8<-- "examples/Methods/main.go"
 ```
 
-1. This area method has a receiver type of `*rect`.
+1. This area method has a receiver type of `*rect`. This is required if the method wants to change any field of the struct.
 2. Methods can be defined for either **pointer** or **value** receiver types. Here’s an example of a value receiver.
 3. Here we call the 2 methods defined for our struct.
 4. Go automatically handles conversion between values and pointers for method calls. You may want to use a pointer receiver type to avoid copying on method calls or to allow the
    method to mutate the receiving struct.
 
-??? important "Go methods are functions associated with a struct type."
+??? output "Program output"
+    ```
+    area:  50
+    perim: 30
+    area:  50
+    perim: 30
+    ```
+
+??? important "Go methods are functions associated with a type."
     Go methods are functions that are associated with a specific struct type. Methods in Go allow you to define functions that operate on struct values, enabling you to encapsulate 
     behavior and functionality within a struct type. Methods are a powerful feature of Go that allow you to define custom behavior for struct types.
 
@@ -1156,53 +1039,11 @@ func main() {
 
 ![](images/Interfaces.svg)
 
+Like interfaces in Java or C#, Go interfaces define a set of methods that a type must implement to satisfy the interface. Interfaces in Go provide a way to define behavior for 
+types without specifying the implementation details, enabling you to define custom APIs and interfaces for your programs.
+
 ```go linenums="1"
-package main
-
-import (
-    "fmt"
-    "math"
-)
-
-type geometry interface { // (1)!
-    area() float64
-    perim() float64
-}
-
-type rect struct { // (2)!
-    width, height float64
-}
-type circle struct {
-    radius float64
-}
-
-func (r rect) area() float64 { // (3)!
-    return r.width * r.height
-}
-func (r rect) perim() float64 {
-    return 2*r.width + 2*r.height
-}
-
-func (c circle) area() float64 { // (4)!
-    return math.Pi * c.radius * c.radius
-}
-func (c circle) perim() float64 {
-    return 2 * math.Pi * c.radius
-}
-
-func measure(g geometry) { // (5)!
-    fmt.Println(g)
-    fmt.Println(g.area())
-    fmt.Println(g.perim())
-}
-
-func main() {
-    r := rect{width: 3, height: 4}
-    c := circle{radius: 5}
-
-    measure(r) // (6)!
-    measure(c)
-}
+--8<-- "examples/Interfaces/main.go"
 ```
 
 1. Here’s a basic interface for geometric shapes.
@@ -1212,6 +1053,16 @@ func main() {
 5. If a variable has an interface type, then we can call methods that are in the named interface. Here’s a generic measure function taking advantage of this to work on any
    `geometry`.
 6. The `circle` and `rect` struct types both implement the `geometry` interface so we can use instances of these structs as arguments to `measure`.
+
+??? output "Program output"
+    ```
+    {3 4}
+    12
+    14
+    {5}
+    78.53981633974483
+    31.41592653589793
+    ```
 
 ??? important "Go interfaces are named collections of method signatures."
     Go interfaces are named collections of method signatures that define a set of methods that a type must implement to satisfy the interface. Interfaces in Go provide a way to 
@@ -1229,46 +1080,11 @@ Go supports **embedding** of structs and interfaces to express a more seamless *
 
 ![](images/Struct%20Embedding.svg)
 
+From a point of view of a C++ developer, this is similar to **inheritance**. However, Go does not support inheritance in the traditional sense. Instead, Go uses composition and
+embedding to achieve code reuse and polymorphism.
+
 ```go linenums="1"
-package main
-
-import "fmt"
-
-type base struct {
-    num int
-}
-
-func (b base) describe() string {
-    return fmt.Sprintf("base with num=%v", b.num)
-}
-
-type container struct {
-    base // (1)!
-    str string
-}
-
-func main() {
-
-    co := container{
-        base: base{ // (2)!
-            num: 1,
-        },
-        str: "some name",
-    }
-
-    fmt.Printf("co={num: %v, str: %v}\n", co.num, co.str) // (3)!
-
-    fmt.Println("also num:", co.base.num) // (4)!
-
-    fmt.Println("describe:", co.describe()) // (5)!
-
-    type describer interface {
-        describe() string
-    }
-
-    var d describer = co // (6)!
-    fmt.Println("describer:", d.describe())
-}
+--8<-- "examples/StructEmbedding/main.go"
 ```
 
 1. A `container` embeds a `base`. An embedding looks like a **field without a name**.
@@ -1279,13 +1095,27 @@ func main() {
 6. Embedding structs with methods may be used to bestow interface implementations onto other structs. Here we see that a container now implements the `describer` interface because
    it embeds `base`.
 
+??? output "Program output"
+    ```
+    co={num: 1, str: some name}
+    also num: 1
+    describe: base with num=1
+    describer: base with num=1
+    ```
+
 ??? important "Go does not support inheritance."
     Go does not support inheritance or derivation in the traditional sense. Instead, Go uses **composition** and **embedding** to achieve code reuse and polymorphism. Embedding 
     allows you to compose types by including other types as fields within a struct, enabling you to reuse code and behavior across different types.
 
+??? important "Go struct embedding is used to compose types and share behavior."
+    Go struct embedding is used to compose types and share behavior between different types. By embedding one struct within another, you can include the fields and methods of the 
+    embedded struct in the outer struct, allowing you to reuse code and behavior across different types. Struct embedding is a powerful feature of Go that enables you to create 
+    complex data structures and objects with shared behavior.
+
 ??? tip "Go interfaces can be implemented implicitly through embedding."
     Go interfaces can be implemented implicitly through embedding, allowing you to define custom behavior for types without explicitly declaring that the type implements the 
     interface. This feature makes it easy to define custom APIs and interfaces for your programs, enabling you to work with different types in a seamless and flexible way.
+
 
 ### Visibility
 
@@ -1296,34 +1126,7 @@ package, you can only access its exported names, thus everything starting with a
 ![](images/Visibility.svg)
 
 ```go linenums="1"
-package toto
-
-type Shape interface { // (1)!
-	SetHeight(height int) // (2)!
-	SetWidth(width int)
-	CalculateArea() int
-}
-
-type rectangle struct { // (3)!
-    height, width int
-}
-
-func NewRectangle(h, w int) Shape { // (4)!
-    return &rectangle{height: h, width: w}
-}
-
-func (r *rectangle) SetHeight(height int) { // (5)!
-    r.height = height
-}
-
-func (r *rectangle) SetWidth(width int) {
-    r.width = width
-}
-
-func (r *rectangle) CalculateArea() int {
-    return r.height * r.width
-}
-
+--8<-- "examples/Visibility/main.go"
 ```
 
 1. In this example, the `Shape` interface is exported because its name starts with a capital letter.
@@ -1350,60 +1153,7 @@ it easy to see which functions return errors and to handle them using the same l
 See the documentation of the `errors` package for additional details.
 
 ```go linenums="1"
-package main
-
-import (
-    "errors"
-    "fmt"
-)
-
-func f(arg int) (int, error) { // (1)!
-    if arg == 42 {
-        return -1, errors.New("can't work with 42") // (2)!
-    }
-
-    return arg + 3, nil // (3)!
-}
-
-var ErrOutOfTea = fmt.Errorf("no more tea available") // (4)!
-var ErrPower = fmt.Errorf("can't boil water")
-
-func makeTea(arg int) error {
-    if arg == 2 {
-        return ErrOutOfTea
-    } else if arg == 4 {
-
-        return fmt.Errorf("making tea: %w", ErrPower) // (5)!
-    }
-    return nil
-}
-
-func main() {
-    for _, i := range []int{7, 42} {
-
-        if r, e := f(i); e != nil { // (6)!
-            fmt.Println("f failed:", e)
-        } else {
-            fmt.Println("f worked:", r)
-        }
-    }
-
-    for i := range 5 {
-        if err := makeTea(i); err != nil {
-
-            if errors.Is(err, ErrOutOfTea) { // (7)!
-                fmt.Println("We should buy new tea!")
-            } else if errors.Is(err, ErrPower) {
-                fmt.Println("Now it is dark.")
-            } else {
-                fmt.Printf("unknown error: %s\n", err)
-            }
-            continue
-        }
-
-        fmt.Println("Tea is ready!")
-    }
-}
+--8<-- "examples/Errors/main.go"
 ```
 
 1. By convention, errors are the last return value and have type `error`, a built-in interface.
@@ -1415,6 +1165,17 @@ func main() {
 6. It’s common to use an **inline error check** in the `if` line.
 7. `errors.Is` checks that a given `error` (or any error in its chain) matches a specific `error` value. This is especially useful with wrapped or nested errors, allowing you to
    identify specific error types or sentinel errors in a chain of errors.
+
+??? output "Program output"
+    ```
+    f worked: 10
+    f failed: can't work with 42
+    Tea is ready!
+    Tea is ready!
+    We should buy new tea!
+    Tea is ready!
+    Now it is dark. 
+    ```
 
 ??? important "Go uses explicit error handling instead of exceptions."
     Go uses explicit error handling instead of exceptions to manage errors in programs. By returning errors as separate values from functions, Go makes it easy to see which functions
@@ -1434,24 +1195,23 @@ handle gracefully.
 ![](images/Panic.svg)
 
 ```go linenums="1"
-package main
-
-import "os"
-
-func main() {
-
-	panic("a problem") // (1)!
-
-	_, err := os.Create("/tmp/file") // (2)!
-	if err != nil {
-		panic(err)
-	}
-}
+--8<-- "examples/Panic/main.go"
 ```
 
 1. Terminates the program with a non-zero exit code. This is a common way to stop execution if a function returns an error value that we don’t know how to (or want to) handle.
 2. A common use of panic is to abort if a function returns an error value that we don’t know how to (or want to) handle. Here’s an example of panicking if we get an unexpected 
    error when creating a new file.
+
+??? output "Program output"
+    ```
+    panic: a problem
+    
+    goroutine 1 [running]:
+    main.main()
+    /Users/JohnDoe/go/The Go Programming Language/examples/Panic/main.go:7 +0x2c
+    
+    Process finished with the exit code 2
+    ```
 
 Running this program will cause it to panic, print an error message and goroutine traces, and exit with a non-zero status. When first panic in main fires, the program exits 
 without reaching the rest of the code. If you’d like to see the program try to create a temp file, comment the first panic out.
@@ -1460,7 +1220,7 @@ without reaching the rest of the code. If you’d like to see the program try to
     Go panics are used to stop execution on unexpected errors that should not occur during normal operation. Panics are typically used to fail fast on errors that cannot be handled 
     gracefully, allowing you to stop the program and print an error message before exiting. Panics are a powerful tool for handling unexpected errors in Go programs.
 
-??? tip "Go panics terminate the program with a non-zero exit code."
+!!! tip "Go panics terminate the program with a non-zero exit code."
 
 
 ### Defer
@@ -1471,50 +1231,20 @@ would be used in other languages.
 ![](images/Defer.svg)
 
 ```go linenums="1"
-package main
-
-import (
-	"fmt"
-	"os"
-)
-
-func main() { // (1)!
-
-	f := createFile("/tmp/defer.txt")
-	defer closeFile(f) // (2)!
-	writeFile(f)
-}
-
-func createFile(p string) *os.File {
-	fmt.Println("creating")
-	f, err := os.Create(p)
-	if err != nil {
-		panic(err)
-	}
-	return f
-}
-
-func writeFile(f *os.File) {
-	fmt.Println("writing")
-	fmt.Fprintln(f, "data")
-
-}
-
-func closeFile(f *os.File) { // (3)!
-	fmt.Println("closing")
-	err := f.Close()
-
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v\n", err)
-		os.Exit(1)
-	}
-}
+--8<-- "examples/Defer/main.go"
 ```
 
 1. Suppose we wanted to create a file, write to it, and then close when we’re done. Here’s how we could do that with `defer`.
 2. Immediately after getting a file object with `createFile`, we `defer` the closing of that file with `closeFile`. This will be executed at the end of the enclosing function 
    (main), after `writeFile` has finished.
 3. It’s important to check for errors when closing a file, even in a deferred function.
+
+??? output "Program output"
+    ```
+    creating
+    writing
+    closing
+    ```
 
 Running the program confirms that the file is closed after being written.
 
@@ -1531,35 +1261,28 @@ The standard library’s `strings` package provides many useful string-related f
 ![](images/String%20Functions.svg)
 
 ```go linenums="1"
-package main
-
-import (
-	"fmt"
-	s "strings"
-)
-
-var p = fmt.Println // (1)!
-
-func main() {
-
-	p("Contains:  ", s.Contains("test", "es")) // (2)!
-	p("Count:     ", s.Count("test", "t"))
-	p("HasPrefix: ", s.HasPrefix("test", "te"))
-	p("HasSuffix: ", s.HasSuffix("test", "st"))
-	p("Index:     ", s.Index("test", "e"))
-	p("Join:      ", s.Join([]string{"a", "b"}, "-"))
-	p("Repeat:    ", s.Repeat("a", 5))
-	p("Replace:   ", s.Replace("foo", "o", "0", -1))
-	p("Replace:   ", s.Replace("foo", "o", "0", 1))
-	p("Split:     ", s.Split("a-b-c-d-e", "-"))
-	p("ToLower:   ", s.ToLower("TEST"))
-	p("ToUpper:   ", s.ToUpper("test"))
-}
+--8<-- "examples/StringFunctions/main.go"
 ```
 
 1. We alias `fmt.Println` to a shorter name as we’ll use it a lot below.
 2. Here’s a sample of the functions available in strings. Since these are functions from the package, not methods on the string object itself, we need pass the string in question 
    as the first argument to the function. You can find more functions in the strings package docs.
+
+??? output "Program output"
+    ```
+    Contains:   true
+    Count:      2
+    HasPrefix:  true
+    HasSuffix:  true
+    Index:      1
+    Join:       a-b
+    Repeat:     aaaaa
+    Replace:    f00
+    Replace:    f0o
+    Split:      [a b c d e]
+    ToLower:    test
+    ToUpper:    TEST
+    ```
 
 ??? important "Go strings package provides many useful functions for working with strings."
     The Go strings package provides many useful functions for working with strings, including functions for searching, replacing, splitting, and transforming strings. The strings 
@@ -1573,66 +1296,7 @@ Go offers support for string formatting in the `printf` tradition. Here are some
 ![](images/String%20Formatting.svg)
 
 ```go linenums="1"
-package main
-
-import (
-	"fmt"
-	"os"
-)
-
-type point struct {
-	x, y int
-}
-
-func main() {
-
-	p := point{1, 2}
-	fmt.Printf("struct1: %v\n", p) // (1)!
-
-	fmt.Printf("struct2: %+v\n", p) // (2)!
-
-	fmt.Printf("struct3: %#v\n", p) // (3)!
-
-	fmt.Printf("type: %T\n", p) // (4)!
-
-	fmt.Printf("bool: %t\n", true) // (5)!
-
-	fmt.Printf("int: %d\n", 123) // (6)!
-
-	fmt.Printf("bin: %b\n", 14) // (7)!
-
-	fmt.Printf("char: %c\n", 33) // (8)!
-
-	fmt.Printf("hex: %x\n", 456) // (9)!
-
-	fmt.Printf("float1: %f\n", 78.9) // (10)!
-
-	fmt.Printf("float2: %e\n", 123400000.0) // (11)!
-	fmt.Printf("float3: %E\n", 123400000.0)
-
-	fmt.Printf("str1: %s\n", "string") // (12)!
-
-	fmt.Printf("str2: %q\n", "string") // (13)!
-
-	fmt.Printf("str3: %x\n", "hex this") // (14)!
-
-	fmt.Printf("pointer: %p\n", &p) // (15)!
-
-	fmt.Printf("width1: |%6d|%6d|\n", 12, 345) // (16)!
-
-	fmt.Printf("width2: |%6.2f|%6.2f|\n", 1.2, 3.45) // (17)!
-
-	fmt.Printf("width3: |%-6.2f|%-6.2f|\n", 1.2, 3.45) // (18)!
-
-	fmt.Printf("width4: |%6s|%6s|\n", "foo", "b") // (19)!
-
-	fmt.Printf("width5: |%-6s|%-6s|\n", "foo", "b") // (20)!
-
-	s := fmt.Sprintf("sprintf: a %s", "string") // (21)!
-	fmt.Println(s)
-
-	fmt.Fprintf(os.Stderr, "io: an %s\n", "error") // (22)!
-}
+--8<-- "examples/StringFormatting/main.go"
 ```
 
 1. Go offers several printing “verbs” designed to format general Go values. For example, this prints an instance of our `point` struct.
@@ -1659,6 +1323,32 @@ func main() {
 21. So far we’ve seen `Printf`, which prints the formatted string to `os.Stdout`. `Sprintf` formats and returns a string without printing it anywhere.
 22. You can format+print to` io.Writers` other than `os.Stdout` using `Fprintf`.
 
+??? output "Program output"
+    ```
+    struct1: {1 2}
+    struct2: {x:1 y:2}
+    struct3: main.point{x:1, y:2}
+    type: main.point
+    bool: true
+    int: 123
+    bin: 1110
+    char: !
+    hex: 1c8
+    float1: 78.900000
+    float2: 1.234000e+08
+    float3: 1.234000E+08
+    str1: string
+    str2: "string"
+    str3: 6865782074686973
+    pointer: 0x14000110020
+    width1: |    12|   345|
+    width2: |  1.20|  3.45|
+    width3: |1.20  |3.45  |
+    width4: |   foo|     b|
+    width5: |foo   |b     |
+    sprintf: a string
+    io: an error
+    ```
 
 ### JSON Encoding and Decoding
 
@@ -1667,84 +1357,7 @@ Go offers built-in support for **JSON encoding and decoding**, including to and 
 ![](images/JSON.svg)
 
 ```go linenums="1"
-package main
-
-import (
-	"encoding/json"
-	"fmt"
-	"os"
-)
-
-type response1 struct { // (1)!
-	Page   int  // (2)!
-	Fruits []string
-}
-
-type response2 struct {
-	Page   int      `json:"page"` // (3)!
-	Fruits []string `json:"fruits"`
-}
-
-func main() {
-
-	bolB, _ := json.Marshal(true) // (4)!
-	fmt.Println(string(bolB))
-
-	intB, _ := json.Marshal(1)
-	fmt.Println(string(intB))
-
-	fltB, _ := json.Marshal(2.34)
-	fmt.Println(string(fltB))
-
-	strB, _ := json.Marshal("gopher")
-	fmt.Println(string(strB))
-
-	slcD := []string{"apple", "peach", "pear"} // (5)!
-	slcB, _ := json.Marshal(slcD)
-	fmt.Println(string(slcB))
-
-	mapD := map[string]int{"apple": 5, "lettuce": 7}
-	mapB, _ := json.Marshal(mapD)
-	fmt.Println(string(mapB))
-
-	res1D := &response1{ // (6)!
-		Page:   1,
-		Fruits: []string{"apple", "peach", "pear"}}
-	res1B, _ := json.Marshal(res1D)
-	fmt.Println(string(res1B))
-
-	res2D := &response2{
-		Page:   1,
-		Fruits: []string{"apple", "peach", "pear"}}
-	res2B, _ := json.Marshal(res2D)
-	fmt.Println(string(res2B))
-
-	byt := []byte(`{"num":6.13,"strs":["a","b"]}`) // (7)!
-
-	var dat map[string]interface{} // (8)!
-
-	if err := json.Unmarshal(byt, &dat); err != nil { // (9)!
-		panic(err)
-	}
-	fmt.Println(dat)
-
-	num := dat["num"].(float64) // (10)!
-	fmt.Println(num)
-
-	strs := dat["strs"].([]interface{}) // (11)!
-	str1 := strs[0].(string)
-	fmt.Println(str1)
-
-	str := `{"page": 1, "fruits": ["apple", "peach"]}` // (12)!
-	res := response2{}
-	json.Unmarshal([]byte(str), &res)
-	fmt.Println(res)
-	fmt.Println(res.Fruits[0])
-
-	enc := json.NewEncoder(os.Stdout) // (13)!
-	d := map[string]int{"apple": 5, "lettuce": 7}
-	enc.Encode(d)
-}
+--8<-- "examples/JSON/main.go"
 ```
 
 1. We’ll use these two `structs` to demonstrate encoding and decoding of custom types below.
@@ -1764,6 +1377,24 @@ func main() {
 13. In the examples above we always used bytes and strings as intermediates between the data and JSON representation on standard out. We can also stream JSON encodings directly 
     to `os.Writers` like `os.Stdout` or even HTTP response bodies.
 
+??? output "Program output"
+    ```
+    true
+    1
+    2.34
+    "gopher"
+    ["apple","peach","pear"]
+    {"apple":5,"lettuce":7}
+    {"Page":1,"Fruits":["apple","peach","pear"]}
+    {"page":1,"fruits":["apple","peach","pear"]}
+    map[num:6.13 strs:[a b]]
+    6.13
+    a
+    {1 [apple peach]}
+    apple
+    {"apple":5,"lettuce":7}
+    ```
+
 ??? important "Go JSON package provides functions for encoding and decoding JSON data."
     The Go `JSON` package provides functions for encoding and decoding JSON data, enabling you to convert Go data structures to JSON strings and vice versa. The JSON package is 
     part of the Go standard library and is commonly used in Go programs to work with JSON data.
@@ -1776,6 +1407,7 @@ func main() {
     Go JSON encoding and decoding supports custom key names using struct tags, allowing you to customize the encoded JSON key names for struct fields. This enables you to control 
     how struct fields are encoded and decoded to and from JSON strings, providing a flexible way to work with JSON data in Go.
 
+!!! tip "Go supports many serializing/deserializing to/from formats like for example **XML**, **YAML**, **CBOR**, **Gob**, **Protocol Buffers**, **MessagePack** and **ASN.1**."
 
 ### Time
 
@@ -1784,56 +1416,7 @@ Go offers extensive support for times and durations. Here are some examples.
 ![](images/Time.svg)
 
 ```go linenums="1"
-package main
-
-import (
-	"fmt"
-	"time"
-)
-
-func main() {
-	p := fmt.Println
-
-	now := time.Now() // (1)!
-	p(now)
-
-	then := time.Date( // (2)!
-		2009, 11, 17, 20, 34, 58, 651387237, time.UTC)
-	p(then)
-
-	p(then.Year()) // (3)!
-	p(then.Month())
-	p(then.Day())
-	p(then.Hour())
-	p(then.Minute())
-	p(then.Second())
-	p(then.Nanosecond())
-	p(then.Location())
-
-	p(then.Weekday()) // (4)!
-
-	p(then.Before(now)) // (5)!
-	p(then.After(now))
-	p(then.Equal(now))
-
-	diff := now.Sub(then) // (6)!
-	p(diff)
-
-	p(diff.Hours()) // (7)!
-	p(diff.Minutes())
-	p(diff.Seconds())
-	p(diff.Nanoseconds())
-
-	p(then.Add(diff)) // (8)!
-	p(then.Add(-diff))
-
-	p(now.Unix()) // (9)!
-	p(now.UnixMilli())
-	p(now.UnixNano())
-
-	p(time.Unix(now.Unix(), 0)) // (10)!
-	p(time.Unix(0, now.UnixNano()))
-}
+--8<-- "examples/Time/main.go"
 ```
 
 1. We’ll start by getting the current time.
@@ -1846,6 +1429,36 @@ func main() {
 8. You can use `Add` to advance a time by a given duration, or with a - to move backwards by a duration.
 9. Use `time` with `Unix`, `UnixMilli` or `UnixNano` to get elapsed time since the Unix epoch in seconds, milliseconds or nanoseconds, respectively.
 10. You can also convert integer seconds or nanoseconds since the epoch into the corresponding `time`.
+
+??? output "Program output"
+    ```
+    2024-09-12 16:44:55.295275 +0200 CEST m=+0.000057584
+    2009-11-17 20:34:58.651387237 +0000 UTC
+    2009
+    November
+    17
+    20
+    34
+    58
+    651387237
+    UTC
+    Tuesday
+    true
+    false
+    false
+    129906h9m56.643887763s
+    129906.16573441327
+    7.794369944064796e+06
+    4.6766219664388776e+08
+    467662196643887763
+    2024-09-12 14:44:55.295275 +0000 UTC
+    1995-01-23 02:25:02.007499474 +0000 UTC
+    1726152295
+    1726152295295
+    1726152295295275000
+    2024-09-12 16:44:55 +0200 CEST
+    2024-09-12 16:44:55.295275 +0200 CEST    
+    ```
 
 ??? important "Go time package provides extensive support for working with times and durations."
     The Go `time` package provides extensive support for working with times and durations, enabling you to manipulate and format time values, calculate time intervals, and perform 
@@ -1867,33 +1480,7 @@ Parsing numbers from strings is a basic but common task in many programs; here�
 ![](images/Number%20Parsing.svg)
 
 ```go linenums="1"
-package main
-
-import (
-	"fmt"
-	"strconv" // (1)!
-)
-
-func main() {
-
-	f, _ := strconv.ParseFloat("1.234", 64) // (2)!
-	fmt.Println(f)
-
-	i, _ := strconv.ParseInt("123", 0, 64) // (3)!
-	fmt.Println(i)
-
-	d, _ := strconv.ParseInt("0x1c8", 0, 64) // (4)!
-	fmt.Println(d)
-
-	u, _ := strconv.ParseUint("789", 0, 64) // (5)!
-	fmt.Println(u)
-
-	k, _ := strconv.Atoi("135") // (6)!
-	fmt.Println(k)
-
-	_, e := strconv.Atoi("wat") // (7)!
-	fmt.Println(e)
-}
+--8<-- "examples/NumberParsing/main.go"
 ```
 
 1. The built-in package `strconv` provides the number parsing.
@@ -1903,6 +1490,16 @@ func main() {
 5. `ParseUint` is also available.
 6. `Atoi` is a convenience function for basic base-10 `int` parsing.
 7. Parse functions return an `error` on bad input.
+
+??? output "Program output"
+    ```
+    1.234
+    123
+    456
+    789
+    135
+    strconv.Atoi: parsing "wat": invalid syntax
+    ```
 
 ??? important "Go strconv package provides functions for parsing numbers from strings."
     The Go `strconv` package provides functions for parsing numbers from strings, including functions for parsing integers, floating-point numbers, and other numeric values. The 
@@ -1918,33 +1515,7 @@ func main() {
 ![](images/Embed.svg)
 
 ```go linenums="1"
-package main
-
-import (
-	"embed" // (1)!
-)
-
-//go:embed folder/single_file.txt (2)
-var fileString string
-
-//go:embed folder/single_file.txt (3)
-var fileByte []byte
-
-//go:embed folder/single_file.txt (4)
-//go:embed folder/*.hash
-var folder embed.FS
-
-func main() {
-
-	print(fileString) // (5)!
-	print(string(fileByte))
-
-	content1, _ := folder.ReadFile("folder/file1.hash") // (6)!
-	print(string(content1))
-
-	content2, _ := folder.ReadFile("folder/file2.hash")
-	print(string(content2))
-}
+--8<-- "examples/Embed/main.go"
 ```
 
 1. Import the `embed` package; if you don’t use any exported identifiers from this package, you can do a blank import with _` "embed"`.
@@ -1955,6 +1526,31 @@ func main() {
 5. Print out the contents of `single_file.txt`.
 6. Retrieve some files from the embedded folder.
 
+Assuming the following file structure is
+
+```plaintext
+    ├── main.go
+    └── resources
+        ├── single_file.txt
+        ├── file1.txt
+        └── file2.txt
+```
+
+and `single_file.txt` contains the text `This is a simple text file.` and the other 2 files are just SHA hashes.
+
+??? output "Program output"
+    ```
+    This is a simple text file.
+    This is a simple text file.
+    c2d48bf31e20f19a5f123cdf0178fed330ea31dc
+    395c41fff98643dcfc353b5dbb55efd484abc558
+    ```
+
+??? important "Go embed directive allows embedding files and folders in Go binaries."
+    The Go `embed` directive allows you to embed files and folders in Go binaries at build time, enabling you to include arbitrary resources in your Go programs without requiring 
+    external files or dependencies. The `embed` directive is a powerful feature of Go that simplifies the distribution and deployment of Go programs by bundling resources directly 
+    into the binary.
+
 
 ### Variadic Functions
 
@@ -1963,28 +1559,7 @@ Variadic functions can be called with any number of trailing arguments. For exam
 ![](images/Variadic%20Functions.svg)
 
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func sum(nums ...int) { // (1)!
-    fmt.Print(nums, " ")
-    total := 0
-
-    for _, num := range nums { // (2)!
-        total += num
-    }
-    fmt.Println(total)
-}
-
-func main() {
-
-    sum(1, 2) // (3)!
-    sum(1, 2, 3)
-
-    nums := []int{1, 2, 3, 4}
-    sum(nums...) // (4)!
-}
+--8<-- "examples/VariadicFunctions/main.go"
 ```
 
 1. Here’s a function that will take an arbitrary number of `ints` as arguments.
@@ -1992,7 +1567,26 @@ func main() {
 3. Variadic functions can be called in the usual way with individual arguments.
 4. If you already have multiple args in a slice, apply them to a variadic function using `func(slice...)` like this.
 
+??? output "Program output"
+    ```
+    [1 2] 3
+    [1 2 3] 6
+    [1 2 3 4] 10
+    ```
+
 Another key aspect of functions in Go is their ability to form closures, which we’ll look at next.
+
+??? important "Go variadic functions can be called with any number of trailing arguments."
+    Go variadic functions can be called with any number of trailing arguments, enabling you to define functions that accept a variable number of arguments. Variadic functions are 
+    commonly used in Go to create flexible and extensible APIs that can accept a variable number of arguments, making it easy to work with functions that operate on multiple values.
+
+??? important "Go variadic functions are implemented using slices."
+    Go variadic functions are implemented using slices, which allow you to work with a variable number of arguments as a single slice value.
+
+??? tip "Go variadic functions can be called with individual arguments or a slice of arguments."
+    You can pass a slice of arguments to a variadic function using the `func(slice...)` syntax, which allows you to apply multiple arguments to a variadic function using a single
+    slice value.
+
 
 ### Closures
 
@@ -2001,29 +1595,7 @@ Go supports **anonymous functions**, which can form **closures**. Anonymous func
 ![](images/Closures.svg)
 
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func intSeq() func() int { // (1)!
-    i := 0
-    return func() int {
-        i++
-        return i
-    }
-}
-
-func main() {
-
-    nextInt := intSeq() // (2)!
-
-    fmt.Println(nextInt()) // (3)!
-    fmt.Println(nextInt())
-    fmt.Println(nextInt())
-
-    newInts := intSeq() // (4)!
-    fmt.Println(newInts())
-}
+--8<-- "examples/Closures/main.go"
 ```
 
 1. This function `intSeq` returns another function, which we define anonymously in the body of `intSeq`. The returned function **closes** over the variable `i` to form a closure.
@@ -2031,7 +1603,20 @@ func main() {
 3. See the effect of the closure by calling `nextInt` a few times.
 4. To confirm that the state is unique to that particular function, create and test a new one.
 
+??? output "Program output"
+    ```
+    1
+    2
+    3
+    1
+    ```
+
+??? important "Go closures capture variables from their surrounding context."
+    Go closures capture variables from their surrounding context, allowing you to create functions that reference and modify variables defined outside the function body. Closures are 
+    a powerful feature of Go that enable you to create flexible and extensible functions that can maintain state across multiple calls.
+
 The last feature of functions we’ll look at for now is recursion.
+
 
 ### Recursion
 
@@ -2040,37 +1625,18 @@ Go supports **recursive functions**. Here’s a classic example.
 ![](images/Recursion.svg)
 
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func fact(n int) int { // (1)!
-    if n == 0 {
-        return 1
-    }
-    return n * fact(n-1)
-}
-
-func main() {
-    fmt.Println(fact(7))
-
-    var fib func(n int) int // (2)!
-
-    fib = func(n int) int {
-        if n < 2 {
-            return n
-        }
-
-        return fib(n-1) + fib(n-2) // (3)!
-    }
-
-    fmt.Println(fib(7))
-}
+--8<-- "examples/Recursion/main.go"
 ```
 
 1. This `fact` function calls itself until it reaches the base case of `fact(0)`.
 2. Closures can also be recursive, but this requires the closure to be declared with a typed `var` explicitly before it’s defined.
 3. Since `fib` was previously declared in `main`, Go knows which function to call with `fib` here.
+
+??? output "Program output"
+    ```
+    5040
+    13
+    ```
 
 
 ### Strings and Runes
@@ -2082,47 +1648,7 @@ called a rune - it’s an integer that represents a Unicode code point.
 ![](images/StringsAndRunes.svg)
 
 ```go linenums="1"
-package main
-
-import (
-    "fmt"
-    "unicode/utf8"
-)
-
-func main() {
-
-    const s = "สวัสดี" // (1)!
-
-    fmt.Println("Len:", len(s)) // (2)!
-
-    for i := 0; i < len(s); i++ { // (3)!
-        fmt.Printf("%x ", s[i])
-    }
-    fmt.Println()
-
-    fmt.Println("Rune count:", utf8.RuneCountInString(s)) // (4)!
-
-    for idx, runeValue := range s { // (5)!
-        fmt.Printf("%#U starts at %d\n", runeValue, idx)
-    }
-
-    fmt.Println("\nUsing DecodeRuneInString")
-    for i, w := 0, 0; i < len(s); i += w {
-        runeValue, width := utf8.DecodeRuneInString(s[i:]) // (6)!
-        fmt.Printf("%#U starts at %d\n", runeValue, i)
-        w = width
-
-        examineRune(runeValue) // (7)!
-    }
-}
-
-func examineRune(r rune) {
-    if r == 't' { // (8)!
-        fmt.Println("found tee")
-    } else if r == 'ส' {
-        fmt.Println("found so sua")
-    }
-}
+--8<-- "examples/StringsAndRunes/main.go"
 ```
 
 1. `s` is a `string` assigned a literal value representing the word “hello” in the Thai language. Go string literals are **UTF-8** encoded text.
@@ -2135,6 +1661,29 @@ func examineRune(r rune) {
 7. This demonstrates passing a `rune` value to a function.
 8. Values enclosed in single quotes are **rune literals**. We can compare a `rune` value to a `rune` literal directly.
 
+??? output "Program output"
+    ```
+    Len: 18
+    e0 b8 aa e0 b8 a7 e0 b8 b1 e0 b8 aa e0 b8 94 e0 b8 b5
+    Rune count: 6
+    U+0E2A 'ส' starts at 0
+    U+0E27 'ว' starts at 3
+    U+0E31 'ั' starts at 6
+    U+0E2A 'ส' starts at 9
+    U+0E14 'ด' starts at 12
+    U+0E35 'ี' starts at 15
+    
+    Using DecodeRuneInString
+    U+0E2A 'ส' starts at 0
+    found so sua
+    U+0E27 'ว' starts at 3
+    U+0E31 'ั' starts at 6
+    U+0E2A 'ส' starts at 9
+    found so sua
+    U+0E14 'ด' starts at 12
+    U+0E35 'ี' starts at 15
+    ```
+
 
 ### Generics
 
@@ -2143,58 +1692,7 @@ Starting with version 1.18, Go has added support for **generics**, also known as
 ![](images/Generics.svg)
 
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func MapKeys[K comparable, V any](m map[K]V) []K { // (1)!
-	r := make([]K, 0, len(m))
-	for k := range m {
-		r = append(r, k)
-	}
-	return r
-}
-
-type List[T any] struct { // (2)!
-	head, tail *element[T]
-}
-
-type element[T any] struct {
-	next *element[T]
-	val  T
-}
-
-func (lst *List[T]) Push(v T) { // (3)!
-	if lst.tail == nil {
-		lst.head = &element[T]{val: v}
-		lst.tail = lst.head
-	} else {
-		lst.tail.next = &element[T]{val: v}
-		lst.tail = lst.tail.next
-	}
-}
-
-func (lst *List[T]) GetAll() []T {
-	var elems []T
-	for e := lst.head; e != nil; e = e.next {
-		elems = append(elems, e.val)
-	}
-	return elems
-}
-
-func main() {
-	var m = map[int]string{1: "2", 2: "4", 4: "8"}
-
-	fmt.Println("keys:", MapKeys(m)) // (4)!
-
-	_ = MapKeys[int, string](m) // (5)!
-
-	lst := List[int]{}
-	lst.Push(10)
-	lst.Push(13)
-	lst.Push(23)
-	fmt.Println("list:", lst.GetAll())
-}
+--8<-- "examples/Generics/main.go"
 ```
 
 1. As an example of a generic function, `MapKeys` takes a map of any type and returns a slice of its keys. This function has two type parameters - `K` and `V`; `K` has the 
@@ -2205,6 +1703,12 @@ func main() {
 4. When invoking generic functions, we can often rely on type inference. Note that we don’t have to specify the types for `K` and `V` when calling `MapKeys` - the compiler infers 
    them automatically.
 5. We could also specify the types explicitly.
+
+??? output "Program output"
+    ```
+    keys: [1 2 4]
+    list: [10 13 23]
+    ```
 
 ??? important "Go generics allow you to write reusable code that works with any type."
     Go generics allow you to write reusable code that works with any type, enabling you to create generic functions, types, and methods that can be used with a wide range of data 
@@ -2224,41 +1728,7 @@ It’s possible to use **custom types as errors** by implementing the `Error()` 
 ![](images/CustomError.svg)
 
 ```go linenums="1"
-package main
-
-import (
-    "errors"
-    "fmt"
-)
-
-type argError struct { // (1)!
-    arg     int
-    message string
-}
-
-func (e *argError) Error() string { // (2)!
-    return fmt.Sprintf("%d - %s", e.arg, e.message)
-}
-
-func f(arg int) (int, error) {
-    if arg == 42 {
-
-        return -1, &argError{arg, "can't work with it"} // (3)!
-    }
-    return arg + 3, nil
-}
-
-func main() {
-
-    _, err := f(42)
-    var ae *argError
-    if errors.As(err, &ae) { // (4)!
-        fmt.Println(ae.arg)
-        fmt.Println(ae.message)
-    } else {
-        fmt.Println("err doesn't match argError")
-    }
-}
+--8<-- "examples/CustomErrors/main.go"
 ```
 
 1. A custom error type usually has the suffix "Error".
@@ -2266,6 +1736,12 @@ func main() {
 3. Return our custom error.
 4. `errors.As` is a more advanced version of `errors.Is`. It checks that a given error or any error in its chain matches a specific error type and converts to a value of that 
    type, returning `true`. If there’s no match, it returns `false`.
+
+??? output "Program output"
+    ```
+    42
+    can't work with it
+    ```
 
 ??? important "Go allows you to define custom error types."
     Go allows you to define custom error types by implementing the `Error()` method on a custom type. By defining a custom error type, you can create more descriptive and 
@@ -2285,32 +1761,7 @@ A **goroutine** is a lightweight thread of execution.
 ![](images/Concurrency.svg)
 
 ```go linenums="1"
-package main
 
-import (
-    "fmt"
-    "time"
-)
-
-func f(from string) {
-    for i := 0; i < 3; i++ {
-        fmt.Println(from, ":", i)
-    }
-}
-
-func main() {
-
-    f("direct") // (1)!
-
-    go f("goroutine") // (2)!
-
-    go func(msg string) { // (3)!
-        fmt.Println(msg)
-    }("going")
-
-    time.Sleep(time.Second) // (4)!
-    fmt.Println("done")
-}
 ```
 
 1. Suppose we have a function call `f(s)`. Here’s how we’d call that in the usual way, running it **synchronously**.
@@ -2321,17 +1772,17 @@ func main() {
 When we run this program, we see the output of the blocking call first, then the output of the two goroutines. 
 The goroutines’ output may be **interleaved**, because goroutines are being run concurrently by the Go runtime.
 
-```
-$ go run goroutines.go
-direct : 0
-direct : 1
-direct : 2
-goroutine : 0
-going
-goroutine : 1
-goroutine : 2
-done
-```
+??? output "Program output"
+    ```
+    direct : 0
+    direct : 1
+    direct : 2
+    going
+    goroutine : 0
+    goroutine : 1
+    goroutine : 2
+    done
+    ```
 
 ??? important "Go goroutines are lightweight threads of execution."
     Go goroutines are lightweight threads of execution that allow you to run multiple tasks concurrently within a single program. Goroutines are managed by the Go runtime and are 
@@ -2348,19 +1799,7 @@ done
 ![](images/Channels.svg)
 
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func main() {
-
-    messages := make(chan string) // (1)!
-
-    go func() { messages <- "ping" }() // (2)!
-
-    msg := <-messages // (3)!
-    fmt.Println(msg)
-}
+--8<-- "examples/Channels/main.go"
 ```
 
 1. Create a new channel with `make(chan val-type)`. Channels are typed by the values they convey.
@@ -2368,6 +1807,11 @@ func main() {
 3. The `<-channel` syntax receives a value from the channel. Here we’ll receive the "ping" message we sent above and print it out.
 
 When we run the program the "ping" message is successfully passed from one goroutine to another via our channel.
+
+??? output "Program output"
+    ```
+    ping
+    ```
 
 ??? important "Go channels are used to communicate between goroutines."
     Go channels are used to communicate between concurrent goroutines in a Go program. Channels provide a way to send and receive values between goroutines, enabling you to 
@@ -2388,25 +1832,18 @@ By default, channels are **unbuffered**, meaning that they will only accept send
 ![](images/Channel%20Buffering.svg)
 
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func main() {
-
-    messages := make(chan string, 2) // (1)!
-
-    messages <- "buffered" // (2)!
-    messages <- "channel"
-
-    fmt.Println(<-messages) // (3)!
-    fmt.Println(<-messages)
-}
+--8<-- "examples/ChannelBuffering/main.go"
 ```
 
 1. Here we make a channel of strings buffering up to 2 values.
 2. Because this channel is **buffered**, we can send these values into the channel without a corresponding concurrent receive.
 3. Later we can **receive** these two values as usual.
+
+??? output "Program output"
+    ```
+    buffered
+    channel
+    ```
 
 ??? important "Go channels can be buffered to accept a limited number of values."
     Go channels can be **buffered** to accept a limited number of values without a corresponding receiver. Buffered channels provide a way to store values temporarily until they 
@@ -2422,28 +1859,7 @@ goroutines to finish, you may prefer to use a **WaitGroup**.
 ![](images/Channel%20Synchronization.svg)
 
 ```go linenums="1"
-package main
-
-import (
-    "fmt"
-    "time"
-)
-
-func worker(done chan bool) { // (1)!
-    fmt.Print("working...")
-    time.Sleep(time.Second)
-    fmt.Println("done")
-
-    done <- true // (2)!
-}
-
-func main() {
-
-    done := make(chan bool, 1)
-    go worker(done) // (3)!
-
-    <-done // (4)!
-}
+--8<-- "examples/ChannelSynchronization/main.go"
 ```
 
 1. This is the function we’ll run in a goroutine. The `done` channel will be used to notify another goroutine that this function’s work is done.
@@ -2452,6 +1868,12 @@ func main() {
 4. Block until we receive a notification from the worker on the channel.
 
 If you removed the `<- done` line from this program, the program would exit before the worker even started.
+
+??? output "Program output"
+    ```
+    working...
+    done
+    ```
 
 ??? important "Go channels can be used to synchronize goroutines."
     Go channels can be used to synchronize the execution of goroutines in a Go program. By using channels to send and receive values between goroutines, you can coordinate the 
@@ -2466,30 +1888,16 @@ When using channels as function parameters, you can specify if a channel is mean
 ![](images/Channel%20Direction.svg)
 
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func ping(pings chan<- string, msg string) { // (1)!
-    pings <- msg
-}
-
-func pong(pings <-chan string, pongs chan<- string) { // (2)!
-    msg := <-pings
-    pongs <- msg
-}
-
-func main() {
-    pings := make(chan string, 1)
-    pongs := make(chan string, 1)
-    ping(pings, "passed message")
-    pong(pings, pongs)
-    fmt.Println(<-pongs)
-}
+--8<-- "examples/ChannelDirections/main.go"
 ```
 
 1. This `ping` function only accepts a channel for sending values. It would be a compile-time error to try to receive on this channel.
 2. The `pong` function accepts one channel for receives (pings) and a second for sends (pongs).
+
+??? output "Program output"
+    ```
+    passed message
+    ```
 
 ??? important "Go channels can have send-only or receive-only directions."
     Go channels can have **send-only** or **receive-only** directions, allowing you to specify whether a channel is meant to only send or receive values. By using channel 
@@ -2504,41 +1912,18 @@ Go’s **select** lets you wait on multiple channel operations. Combining gorout
 ![](images/Select.svg)
 
 ```go linenums="1"
-package main
-
-import (
-    "fmt"
-    "time"
-)
-
-func main() {
-
-    c1 := make(chan string) // (1)!
-    c2 := make(chan string)
-
-    go func() { // (2)!
-        time.Sleep(1 * time.Second)
-        c1 <- "one"
-    }()
-    go func() {
-        time.Sleep(2 * time.Second)
-        c2 <- "two"
-    }()
-
-    for i := 0; i < 2; i++ {
-        select { // (3)!
-        case msg1 := <-c1:
-            fmt.Println("received", msg1)
-        case msg2 := <-c2:
-            fmt.Println("received", msg2)
-        }
-    }
-}
+--8<-- "examples/Select/main.go"
 ```
 
 1. For our example we’ll select across two channels.
 2. Each channel will receive a value after some amount of time, to simulate e.g. blocking RPC operations executing in concurrent goroutines.
 3. We’ll use `select` to await both of these values simultaneously, printing each one as it arrives.
+
+??? output "Program output"
+    ```
+    received one
+    received two
+    ```
 
 We receive the values "one" and then "two" as expected.
 
@@ -2558,40 +1943,7 @@ to channels and select.
 ![](images/Timeouts.svg)
 
 ```go linenums="1"
-package main
-
-import (
-    "fmt"
-    "time"
-)
-
-func main() {
-
-    c1 := make(chan string, 1) // (1)!
-    go func() {
-        time.Sleep(2 * time.Second)
-        c1 <- "result 1"
-    }()
-
-    select { // (2)!
-    case res := <-c1:
-        fmt.Println(res)
-    case <-time.After(1 * time.Second):
-        fmt.Println("timeout 1")
-    }
-
-    c2 := make(chan string, 1) // (3)!
-    go func() {
-        time.Sleep(2 * time.Second)
-        c2 <- "result 2"
-    }()
-    select {
-    case res := <-c2:
-        fmt.Println(res)
-    case <-time.After(3 * time.Second):
-        fmt.Println("timeout 2")
-    }
-}
+--8<-- "examples/Timeouts/main.go"
 ```
 
 1. For our example, suppose we’re executing an external call that returns its result on a channel `c1` after 2s. Note that the channel is buffered, so the send in the goroutine 
@@ -2599,6 +1951,12 @@ func main() {
 2. Here’s the `select` implementing a **timeout**. `res := <-c1` awaits the result and `<-time.After` awaits a value to be sent after the timeout of 1s. Since `select` proceeds 
    with the first receive that’s ready, we’ll take the timeout case if the operation takes more than the allowed 1s.
 3. If we allow a longer timeout of 3s, then the receive from `c2` will succeed and we’ll print the result.
+
+??? output "Program output"
+    ```
+    timeout 1
+    result 2
+    ```
 
 Running this program shows the first operation timing out and the second succeeding.
 
@@ -2616,38 +1974,7 @@ Basic sends and receives on channels are blocking. However, we can use `select` 
 ![](images/Non-Blocking%20Channel%20Operations.svg)
 
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func main() {
-    messages := make(chan string)
-    signals := make(chan bool)
-
-    select { // (1)!
-    case msg := <-messages:
-        fmt.Println("received message", msg)
-    default:
-        fmt.Println("no message received")
-    }
-
-    msg := "hi" // (2)!
-    select {
-    case messages <- msg:
-        fmt.Println("sent message", msg)
-    default:
-        fmt.Println("no message sent")
-    }
-
-    select { // (3)!
-    case msg := <-messages:
-        fmt.Println("received message", msg)
-    case sig := <-signals:
-        fmt.Println("received signal", sig)
-    default:
-        fmt.Println("no activity")
-    }
-}
+--8<-- "examples/NonBlockingChannelOperations/main.go"
 ```
 
 1. Here’s a non-blocking receive. If a value is available on messages then select will take the `<-messages` case with that value. If not it will immediately take the `default` 
@@ -2655,6 +1982,13 @@ func main() {
 2. A non-blocking send works similarly. Here `msg` cannot be sent to the messages channel, because the channel has no buffer and there is no receiver. Therefore the `default` case 
    is selected.
 3. We can use multiple `cases` above the default clause to implement a multi-way non-blocking select. Here we attempt non-blocking receives on both `messages` and `signals`.
+
+??? output "Program output"
+    ```
+    no message received
+    no message sent
+    no activity
+    ```
 
 ??? important "Go select with default clause can be used to implement non-blocking channel operations."
     Go select with a default clause can be used to implement non-blocking channel operations in a Go program. By using select with a default case, you can perform non-blocking 
@@ -2666,40 +2000,10 @@ func main() {
 
 **Closing** a channel indicates that no more values will be sent on it. This can be useful to communicate completion to the channel’s receivers.
 
+![](images/Closing%20Channels.svg)
+
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func main() { // (1)!
-    jobs := make(chan int, 5)
-    done := make(chan bool)
-
-    go func() { // (2)!
-        for {
-            j, more := <-jobs
-            if more {
-                fmt.Println("received job", j)
-            } else {
-                fmt.Println("received all jobs")
-                done <- true
-                return
-            }
-        }
-    }()
-
-    for j := 1; j <= 3; j++ { // (3)!
-        jobs <- j
-        fmt.Println("sent job", j)
-    }
-    close(jobs)
-    fmt.Println("sent all jobs")
-
-    <-done // (4)!
-
-    _, ok := <-jobs // (5)!
-    fmt.Println("received more jobs:", ok)
-}
+--8<-- "examples/ClosingChannels/main.go"
 ```
 
 1. In this example we’ll use a jobs channel to communicate work to be done from the` main()` goroutine to a worker goroutine. When we have no more jobs for the worker we’ll `close` 
@@ -2711,6 +2015,19 @@ func main() { // (1)!
 5. Reading from a closed channel succeeds immediately, returning the zero value of the underlying type. The optional second return value is `true` if the value received was 
    delivered by a successful send operation to the channel, or `false` if it was a zero value generated because the channel is closed and empty.
 
+??? output "Program output"
+    ```
+    sent job 1
+    sent job 2
+    sent job 3
+    sent all jobs
+    received job 1
+    received job 2
+    received job 3
+    received all jobs
+    received more jobs: false
+    ```
+
 ??? important "Go channels can be closed to indicate completion."
     Go channels can be closed to indicate that no more values will be sent on the channel, allowing you to communicate completion to the channel’s receivers. By closing a channel, 
     you can signal that all values have been sent and that the channel is no longer in use. Closing channels is a useful feature of Go that enables you to coordinate the execution 
@@ -2721,26 +2038,20 @@ func main() { // (1)!
 
 In a previous example we saw how for and range provide iteration over basic data structures. We can also use this syntax to iterate over **values received from a channel**.
 
+![](images/Range%20over%20Channels.svg)
+
 ```go linenums="1"
-package main
-
-import "fmt"
-
-func main() {
-
-    queue := make(chan string, 2) // (1)!
-    queue <- "one"
-    queue <- "two"
-    close(queue)
-
-    for elem := range queue { // (2)!
-        fmt.Println(elem)
-    }
-}
+--8<-- "examples/RangeOverChannels/main.go"
 ```
 
 1. We’ll iterate over 2 values in the `queue` channel.
 2. This `range` iterates over each element as it’s received from `queue`. Because we closed the channel above, the iteration terminates after receiving the 2 elements.
+
+??? output "Program output"
+    ```
+    one
+    two
+    ```
 
 This example also showed that it’s possible to close a non-empty channel but still have the remaining values be received.
 
@@ -2755,33 +2066,10 @@ This example also showed that it’s possible to close a non-empty channel but s
 We often want to execute Go code at some point in the future, or repeatedly at some interval. Go’s built-in timer and ticker features make both of these tasks easy. We’ll look 
 first at **timers** and then at **tickers**.
 
+![](images/Timers.svg)
+
 ```go linenums="1"
-package main
-
-import (
-    "fmt"
-    "time"
-)
-
-func main() {
-
-    timer1 := time.NewTimer(2 * time.Second) // (1)!
-
-    <-timer1.C // (2)!
-    fmt.Println("Timer 1 fired")
-
-    timer2 := time.NewTimer(time.Second) // (3)!
-    go func() {
-        <-timer2.C
-        fmt.Println("Timer 2 fired")
-    }()
-    stop2 := timer2.Stop()
-    if stop2 {
-        fmt.Println("Timer 2 stopped")
-    }
-
-    time.Sleep(2 * time.Second) // (4)!
-}
+--8<-- "examples/Timers/main.go"
 ```
 
 1. Timers represent a single event in the future. You tell the timer how long you want to wait, and it provides a channel that will be notified at that time. This timer will wait 
@@ -2789,6 +2077,12 @@ func main() {
 2. The `<-timer1.C` blocks on the timer’s channel `C` until it sends a value indicating that the timer fired.
 3. If you just wanted to wait, you could have used `time.Sleep`. One reason a timer may be useful is that you can cancel the timer before it fires. Here’s an example of that.
 4. Give the `timer2` enough time to fire, if it ever was going to, to show it is in fact stopped.
+
+??? output "Program output"
+    ```
+    Timer 1 fired
+    Timer 2 stopped
+    ```
 
 The first timer will fire ~2s after we start the program, but the second should be stopped before it has a chance to fire.
 
@@ -2803,39 +2097,22 @@ The first timer will fire ~2s after we start the program, but the second should 
 **Timers** are for when you want to do something once in the future - tickers are for when you want to do something repeatedly at regular intervals. Here’s an example of a 
 **ticker** that ticks periodically until we stop it.
 
+![](images/Tickers.svg)
+
 ```go linenums="1"
-package main
-
-import (
-    "fmt"
-    "time"
-)
-
-func main() {
-
-    ticker := time.NewTicker(500 * time.Millisecond) // (1)!
-    done := make(chan bool)
-
-    go func() {
-        for {
-            select {
-            case <-done:
-                return
-            case t := <-ticker.C:
-                fmt.Println("Tick at", t)
-            }
-        }
-    }()
-
-    time.Sleep(1600 * time.Millisecond) // (2)!
-    ticker.Stop()
-    done <- true
-    fmt.Println("Ticker stopped")
-}
+--8<-- "examples/Tickers/main.go"
 ```
 
 1. Tickers use a similar mechanism to timers: a channel that is sent values. Here we’ll use the `select` builtin on the channel to await the values as they arrive every 500ms.
 2. Tickers can be stopped like timers. Once a ticker is stopped it won’t receive any more values on its channel. We’ll stop ours after 1600ms.
+
+??? output "Program output"
+    ```
+    Tick at 2024-09-12 18:07:17.372085 +0200 CEST m=+0.501174084
+    Tick at 2024-09-12 18:07:17.872016 +0200 CEST m=+1.001106917
+    Tick at 2024-09-12 18:07:18.372005 +0200 CEST m=+1.501097001
+    Ticker stopped
+    ```
 
 When we run this program the ticker should tick 3 times before we stop it.
 
@@ -2854,42 +2131,10 @@ When we run this program the ticker should tick 3 times before we stop it.
 
 In this example we’ll look at how to implement a **worker pool** using goroutines and channels.
 
+![](images/Worker%20Pools.svg)
+
 ```go linenums="1"
-package main
-
-import (
-    "fmt"
-    "time"
-)
-
-func worker(id int, jobs <-chan int, results chan<- int) { // (1)!
-    for j := range jobs {
-        fmt.Println("worker", id, "started  job", j)
-        time.Sleep(time.Second)
-        fmt.Println("worker", id, "finished job", j)
-        results <- j * 2
-    }
-}
-
-func main() {
-
-    const numJobs = 5 // (2)!
-    jobs := make(chan int, numJobs)
-    results := make(chan int, numJobs)
-
-    for w := 1; w <= 3; w++ { // (3)!
-        go worker(w, jobs, results)
-    }
-
-    for j := 1; j <= numJobs; j++ { // (4)!
-        jobs <- j
-    }
-    close(jobs)
-
-    for a := 1; a <= numJobs; a++ { // (5)!
-        <-results
-    }
-}
+--8<-- "examples/WorkerPools/main.go"
 ```
 
 1. Here’s the worker, of which we’ll run several concurrent instances. These workers will receive work on the jobs channel and send the corresponding results on results. We’ll 
@@ -2900,6 +2145,19 @@ func main() {
 5. Finally we collect all the results of the work. This also ensures that the worker goroutines have finished. An alternative way to wait for multiple goroutines is to use a 
    **WaitGroup**.
 
+??? output "Program output"
+    ```
+    worker 3 started  job 1
+    worker 2 started  job 3
+    worker 1 started  job 2
+    worker 2 finished job 3
+    worker 3 finished job 1
+    worker 3 started  job 5
+    worker 1 finished job 2
+    worker 2 started  job 4
+    worker 2 finished job 4
+    worker 3 finished job 5
+    ```
 
 Our running program shows the 5 jobs being executed by various workers. The program only takes about 2 seconds despite doing about 5 seconds of total work because there are 3 
 workers operating concurrently.
@@ -2916,38 +2174,10 @@ workers operating concurrently.
 
 To wait for multiple goroutines to finish, we can use a **wait group**.
 
+![](images/WaitGroups.svg)
+
 ```go linenums="1"
-package main
-
-import (
-    "fmt"
-    "sync"
-    "time"
-)
-
-func worker(id int) { // (1)!
-    fmt.Printf("Worker %d starting\n", id)
-
-    time.Sleep(time.Second) // (2)!
-    fmt.Printf("Worker %d done\n", id)
-}
-
-func main() {
-
-    var wg sync.WaitGroup // (3)!
-
-    for i := 1; i <= 5; i++ { // (4)!
-        wg.Add(1)
-
-        go func() { // (5)!
-            defer wg.Done()
-            worker(i)
-        }()
-    }
-
-    wg.Wait() // (6)!
-
-}
+--8<-- "examples/WaitGroups/main.go"
 ```
 
 1. This is the function we’ll run in every goroutine.
@@ -2957,6 +2187,20 @@ func main() {
 5. Wrap the worker call in a closure that makes sure to tell the WaitGroup that this worker is done. This way the worker itself does not have to be aware of the concurrency 
    primitives involved in its execution.
 6. Block until the WaitGroup counter goes back to 0; all the workers notified they’re done.
+
+??? output "Program output"
+    ```
+    Worker 5 starting
+    Worker 2 starting
+    Worker 4 starting
+    Worker 1 starting
+    Worker 3 starting
+    Worker 3 done
+    Worker 4 done
+    Worker 5 done
+    Worker 1 done
+    Worker 2 done
+    ```
 
 The order of workers starting up and finishing is likely to be different for each invocation.
 
@@ -2973,51 +2217,10 @@ The order of workers starting up and finishing is likely to be different for eac
 **Rate limiting** is an important mechanism for controlling resource utilization and maintaining quality of service. Go elegantly supports rate limiting with **goroutines**, 
 **channels**, and **tickers**.
 
+![](images/Rate%20Limiting.svg)
+
 ```go linenums="1"
-package main
-
-import (
-    "fmt"
-    "time"
-)
-
-func main() {
-
-    requests := make(chan int, 5) // (1)!
-    for i := 1; i <= 5; i++ {
-        requests <- i
-    }
-    close(requests)
-
-    limiter := time.Tick(200 * time.Millisecond) // (2)!
-
-    for req := range requests { // (3)!
-        <-limiter
-        fmt.Println("request", req, time.Now())
-    }
-
-    burstyLimiter := make(chan time.Time, 3) // (4)!
-
-    for i := 0; i < 3; i++ { // (5)!
-        burstyLimiter <- time.Now()
-    }
-
-    go func() { // (6)!
-        for t := range time.Tick(200 * time.Millisecond) {
-            burstyLimiter <- t
-        }
-    }()
-
-    burstyRequests := make(chan int, 5)
-    for i := 1; i <= 5; i++ { // (7)!
-        burstyRequests <- i
-    }
-    close(burstyRequests)
-    for req := range burstyRequests {
-        <-burstyLimiter
-        fmt.Println("request", req, time.Now())
-    }
-}
+--8<-- "examples/RateLimiting/main.go"
 ```
 
 1. First we’ll look at basic rate limiting. Suppose we want to limit our handling of incoming requests. We’ll serve these requests off a channel of the same name.
@@ -3028,7 +2231,21 @@ func main() {
 5. Fill up the channel to represent allowed bursting.
 6. Every 200 milliseconds we’ll try to add a new value to `burstyLimiter`, up to its limit of 3.
 7. Now simulate 5 more incoming requests. The first 3 of these will benefit from the burst capability of `burstyLimiter`.
-  
+
+??? output "Program output"
+    ```
+    request 1 2024-09-12 18:11:12.136083 +0200 CEST m=+0.201232001
+    request 2 2024-09-12 18:11:12.335888 +0200 CEST m=+0.401037459
+    request 3 2024-09-12 18:11:12.535967 +0200 CEST m=+0.601117876
+    request 4 2024-09-12 18:11:12.735966 +0200 CEST m=+0.801118292
+    request 5 2024-09-12 18:11:12.935984 +0200 CEST m=+1.001137209
+    request 1 2024-09-12 18:11:12.93621 +0200 CEST m=+1.001363626
+    request 2 2024-09-12 18:11:12.936235 +0200 CEST m=+1.001388042
+    request 3 2024-09-12 18:11:12.93624 +0200 CEST m=+1.001393292
+    request 4 2024-09-12 18:11:13.1363 +0200 CEST m=+1.201454876
+    request 5 2024-09-12 18:11:13.336476 +0200 CEST m=+1.401632167
+    ```
+
 Running our program we see the first batch of requests handled once every ~200 milliseconds as desired. For the second batch of requests we serve the first 3 immediately because 
 of the burstable rate limiting, then serve the remaining 2 with ~200ms delays each.
 
@@ -3043,38 +2260,10 @@ of the burstable rate limiting, then serve the remaining 2 with ~200ms delays ea
 The primary mechanism for managing state in Go is communication over channels. We saw this for example with worker pools. There are a few other options for managing state though. 
 Here we’ll look at using the `sync/atomic` package for **atomic counters** accessed by multiple goroutines.
 
+![](images/Atomic%20Counters.svg)
+
 ```go linenums="1"
-package main
-
-import (
-    "fmt"
-    "sync"
-    "sync/atomic"
-)
-
-func main() {
-
-    var ops atomic.Uint64 // (1)!
-
-    var wg sync.WaitGroup // (2)!
-
-    for i := 0; i < 50; i++ { // (3)!
-        wg.Add(1)
-
-        go func() {
-            for c := 0; c < 1000; c++ {
-
-                ops.Add(1)  // (4)!
-            }
-
-            wg.Done()
-        }()
-    }
-
-    wg.Wait() // (5)!
-
-    fmt.Println("ops:", ops.Load()) // (6)!
-}
+--8<-- "examples/AtomicCounters/main.go"
 ```
 
 1. We’ll use an atomic integer type to represent our (always-positive) counter.
@@ -3083,6 +2272,11 @@ func main() {
 4. To atomically increment the counter we use `Add`.
 5. Wait until all the goroutines are done.
 6. Here no goroutines are writing to `ops`, but using Load it’s safe to atomically read a value even while other goroutines are (atomically) updating it.
+
+??? output "Program output"
+    ```
+    ops: 50000
+    ```
 
 We expect to get exactly 50,000 operations. Had we used a non-atomic integer and incremented it with ops++, we’d likely get a different number, changing between runs, because the 
 goroutines would interfere with each other. Moreover, we’d get data race failures when running with the -race flag.
@@ -3099,47 +2293,10 @@ goroutines would interfere with each other. Moreover, we’d get data race failu
 In the previous example we saw how to manage simple counter state using atomic operations. For more complex state we can use a **mutex** to safely access data across multiple 
 goroutines.
 
+![](images/Mutexes.svg)
+
 ```go linenums="1"
-package main
-
-import (
-    "fmt"
-    "sync"
-)
-
-type Container struct { // (1)!
-    mu       sync.Mutex
-    counters map[string]int
-}
-
-func (c *Container) inc(name string) { // (2)!
-    c.mu.Lock()
-    defer c.mu.Unlock()
-    c.counters[name]++
-}
-
-func main() { // (3)!
-    c := Container{
-        counters: map[string]int{"a": 0, "b": 0},
-    }
-
-    var wg sync.WaitGroup
-
-    doIncrement := func(name string, n int) { // (4)!
-        for i := 0; i < n; i++ {
-            c.inc(name)
-        }
-        wg.Done()
-    }
-
-    wg.Add(3) // (5)!
-    go doIncrement("a", 10000)
-    go doIncrement("a", 10000)
-    go doIncrement("b", 10000)
-
-    wg.Wait() // (6)!
-    fmt.Println(c.counters)
-}
+--8<-- "examples/Mutexes/main.go"
 ```
 
 1. Container holds a map of counters; since we want to update it concurrently from multiple goroutines, we add a Mutex to synchronize access. Note that mutexes must not be copied, 
@@ -3150,6 +2307,11 @@ func main() { // (3)!
 5. Run several goroutines concurrently; note that they all access the same Container, and two of them access the same counter.
 6. Wait for the goroutines to finish
 
+??? output "Program output"
+    ```
+    map[a:20000 b:10000]
+    ```
+
 Running the program shows that the counters updated as expected.
 
 ??? important "Go mutexes can be used to synchronize access to shared data in a concurrent program."
@@ -3158,34 +2320,25 @@ Running the program shows that the counters updated as expected.
 
 ### Sorting
 
+
+![](images/Sorting.svg)
+
 Go’s slices package implements sorting for builtins and user-defined types. We’ll look at sorting for builtins first.
 
 ```go linenums="1"
-package main
-
-import (
-    "fmt"
-    "slices"
-)
-
-func main() {
-
-    strs := []string{"c", "a", "b"}
-    slices.Sort(strs) // (1)!
-    fmt.Println("Strings:", strs)
-
-    ints := []int{7, 2, 4}
-    slices.Sort(ints) // (2)!
-    fmt.Println("Ints:   ", ints)
-
-    s := slices.IsSorted(ints) // (3)!
-    fmt.Println("Sorted: ", s)
-}
+--8<-- "examples/Sorting/main.go"
 ```
 
 1. Sorting functions are generic, and work for any **ordered** built-in type. For a list of ordered types, see `cmp.Ordered`.
 2. An example of sorting `ints`.
 3. We can also use the `slices` package to check if a slice is already in sorted order.
+
+??? output "Program output"
+    ```
+    Strings: [a b c]
+    Ints:    [2 4 7]
+    Sorted:  true
+    ```
 
 ??? important "Go slices package provides functions for sorting slices."
     Go slices package provides functions for sorting slices of built-in types in a Go program. By using the Sort function from the slices package, you can sort slices of strings, 
@@ -3200,48 +2353,22 @@ func main() {
 Sometimes we’ll want to sort a collection by something other than its natural order. For example, suppose we wanted to sort strings by their length instead of alphabetically. 
 Here’s an example of custom sorts in Go.
 
+![](images/Sorting%20by%20Function.svg)
+
 ```go linenums="1"
-package main
-
-import (
-    "cmp"
-    "fmt"
-    "slices"
-)
-
-func main() {
-    fruits := []string{"peach", "banana", "kiwi"}
-
-    lenCmp := func(a, b string) int { // (1)!
-        return cmp.Compare(len(a), len(b))
-    }
-
-    slices.SortFunc(fruits, lenCmp) // (2)!
-    fmt.Println(fruits)
-
-    type Person struct { // (3)!
-        name string
-        age  int
-    }
-
-    people := []Person{
-        Person{name: "Jax", age: 37},
-        Person{name: "TJ", age: 25},
-        Person{name: "Alex", age: 72},
-    }
-
-    slices.SortFunc(people, // (4)!
-        func(a, b Person) int {
-            return cmp.Compare(a.age, b.age)
-        })
-    fmt.Println(people)
-}
+--8<-- "examples/SortingByFunctions/main.go"
 ```
 
 1. We implement a comparison function for `string` lengths. `cmp.Compare` is helpful for this.
 2. Now we can call `slices.SortFunc` with this custom comparison function to sort fruits by name length.
 3. We can use the same technique to sort a slice of values that aren’t built-in types.
 4. Sort `people` by age using `slices.SortFunc`.
+
+??? output "Program output"
+    ```
+    [kiwi peach banana]
+    [{TJ 25} {Jax 37} {Alex 72}]
+    ```
 
 If the `Person` struct is large, you may want the slice to contain `*Person` instead and adjust the sorting function accordingly. If in doubt, prefer the pointer variant!
 
@@ -3250,54 +2377,38 @@ If the `Person` struct is large, you may want the slice to contain `*Person` ins
     slices of data by custom comparison functions, enabling you to order data based on specific criteria and requirements. The slices package provides a flexible and efficient way 
     to sort slices of data by custom comparison functions in a Go program.
 
+
 ### Regular Expressions
 
 Go offers built-in support for **regular expressions**. Here are some examples of common regexp-related tasks in Go.
 
+![](images/Regular%20Expressions.svg)
+
+Here some examples using Go’s built-in regexp support:
+
 ```go linenums="1"
-package main
-
-import (
-    "bytes"
-    "fmt"
-    "regexp"
-)
-
-func main() {
-
-    match, _ := regexp.MatchString("p([a-z]+)ch", "peach")
-    fmt.Println(match)
-
-    r, _ := regexp.Compile("p([a-z]+)ch")
-
-    fmt.Println(r.MatchString("peach"))
-
-    fmt.Println(r.FindString("peach punch"))
-
-    fmt.Println("idx:", r.FindStringIndex("peach punch"))
-
-    fmt.Println(r.FindStringSubmatch("peach punch"))
-
-    fmt.Println(r.FindStringSubmatchIndex("peach punch"))
-
-    fmt.Println(r.FindAllString("peach punch pinch", -1))
-
-    fmt.Println("all:", r.FindAllStringSubmatchIndex(
-        "peach punch pinch", -1))
-
-    fmt.Println(r.FindAllString("peach punch pinch", 2))
-
-    fmt.Println(r.Match([]byte("peach")))
-
-    r = regexp.MustCompile("p([a-z]+)ch")
-    fmt.Println("regexp:", r)
-
-    fmt.Println(r.ReplaceAllString("a peach", "<fruit>"))
-
-    in := []byte("a peach")
-    out := r.ReplaceAllFunc(in, bytes.ToUpper)
-    fmt.Println(string(out))
-}
+--8<-- "examples/RegularExpressions/main.go"
 ```
+
+??? output "Program output"
+    ```
+    true
+    true
+    peach
+    idx: [0 5]
+    [peach ea]
+    [0 5 1 3]
+    [peach punch pinch]
+    all: [[0 5 1 3] [6 11 7 9] [12 17 13 15]]
+    [peach punch]
+    true
+    regexp: p([a-z]+)ch
+    a <fruit>
+    a PEACH
+    ```
+
+??? important "Go provides built-in support for regular expressions."
+    Go provides built-in support for regular expressions in a Go program. By using the regexp package, you can create and manipulate regular expressions to match and extract 
+    patterns in text data. Regular expressions are a powerful feature of Go that enable you to search, match, and replace text data based on specific patterns and rules.
 
 

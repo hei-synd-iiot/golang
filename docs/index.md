@@ -37,9 +37,17 @@ programming language. If you want to learn more about Go, you should definitely 
     I will be happy to help you. Just write an email to <a href="mailto:michael.clausen@hevs.ch">michael.clausen@hevs.ch</a> with your feedback.
 
 ??? downloads "Downloads"
-    - [Slides](downloads/The%20Go%20Programming%20Language.pdf): PDF version of the slides used in the theory session.
+    - [Slides](downloads/The%20Go%20programming%20language.pdf): PDF version of the slides used in the theory session.
 
 ### Why another programming language?
+
+You might wonder why we need another programming language. You learned and used already **Python**, **Java**, **C** and **C++**. So why do we need another one?
+
+A program language is a tool to solve problems. Different languages are better suited for different problems. While **Python** is great for **scripting** and **prototyping**,
+**Java** is great for **enterprise applications** and **Android development**. **C** and **C++** are great for **system programming** and **embedded systems**. However, all these
+languages are not very well suited for **concurrent**, **distributed** and **communicating micro-services**. This is where **Go** comes into play!
+
+![](images/Programming%20Languages.svg)
 
 The motivation to use Go extends beyond its **simplicity**, **efficiency**, and **scalability**, encompassing **robust security features** that are crucial in today's software 
 landscape, especially for **devices exposed to the internet**. Developed with a focus on secure coding practices, Go offers several key security advantages that make it an 
@@ -1507,6 +1515,75 @@ Parsing numbers from strings is a basic but common task in many programs; hereâ€
 
 
 ## Advanced Topics
+
+### Cross Compilation
+
+Go supports **cross-compilation**, which allows you to build Go programs for different operating systems and architectures from a single source code base. This is useful when you
+want to build a Go program for a platform that is different from the one you are currently using.
+
+![](images/Cross%20Compilation.svg)
+
+While cross development is quite complicated for other languages like C++, Go makes it easy to cross-compile programs for different platforms using the `GOOS` and `GOARCH`
+environment variables.
+
+| Environment Variable | Description                                                |
+|----------------------|------------------------------------------------------------|
+| `GOOS`               | The target operating system for the cross-compiled binary. |
+| `GOARCH`             | The target architecture for the cross-compiled binary.     |
+
+Go supports cross-compilation for many operating systems and architectures, the following tables contains the most relevant ones:
+
+| GOOS      | Description                               |
+|-----------|-------------------------------------------|
+| `windows` | Builds the program for Microsoft Windows. |
+| `linux`   | Builds the program for Linux.             |
+| `darwin`  | Builds the program for macOS.             |
+| `ios`     | Builds the program for iOS.               |
+| `android` | Builds the program for Android.           |
+
+| GOARCH    | Description                                                                                                  |
+|-----------|--------------------------------------------------------------------------------------------------------------|
+| `amd64`   | Builds the program for 64-bit Intel/AMD processors.                                                          |
+| `386`     | Builds the program for 32-bit Intel/AMD processors.                                                          |
+| `arm64`   | Builds the program for 64-bit ARM processors.                                                                |
+| `arm`     | Builds the program for 32-bit ARM processors.                                                                |
+| `riscv64` | Builds the program for 64-bit RISC-V processors.                                                             |
+| `wasm`    | Builds the program for WebAssembly, a portable binary format that can be even run in Web Browsers (GOOS=js). |
+
+Finally, here a table with the most common combinations:
+
+| Operating System (GOOS) | Architecture (GOARCH) | Description                                                   |
+|-------------------------|-----------------------|---------------------------------------------------------------|
+| `windows`               | `amd64`               | Builds the program for Windows on 64-bit Intel/AMD processors |
+| `windows`               | `386`                 | Builds the program for Windows on 32-bit Intel/AMD processors |
+| `linux`                 | `amd64`               | Builds the program for Linux on 64-bit Intel/AMD processors   |
+| `linux`                 | `386`                 | Builds the program for Linux on 32-bit Intel/AMD processors   |
+| `linux`                 | `arm64`               | Builds the program for Linux on 64-bit ARM processors         |
+| `linux`                 | `arm`                 | Builds the program for Linux on 32-bit ARM processors         |
+| `darwin`                | `amd64`               | Builds the program for macOS on 64-bit Intel/AMD processors   |
+| `darwin`                | `arm64`               | Builds the program for macOS on 64-bit ARM processors         |
+| `js`                    | `wasm`                | Builds the program for WebAssembly                            |
+
+To cross-compile a Go program, you can just set the `GOOS` and `GOARCH` environment variables before running the `go build` command. 
+
+For example, to cross-compile a Go program for Linux/ARM on a Windows machine, you can run the following commands:
+
+```cmd
+set GOOS=linux
+set GOARCH=arm
+go build -o myprogram-linux-arm
+```
+
+The resulting binary will be named `myprogram-linux-arm` and will be compatible with Linux/ARM systems. You can then copy this binary to a Linux/ARM machine and run it without
+any additional modifications.
+
+??? important "Go supports cross-compilation for different operating systems and architectures."
+    Go supports cross-compilation, which allows you to build Go programs for different operating systems and architectures from a single source code base. Cross-compilation is 
+    useful when you want to build a Go program for a platform that is different from the one you are currently using, enabling you to create binaries for Windows, Linux, macOS, 
+    iOS, Android, and other platforms.
+
+!!! important "Go cross-compilation is achieved using the `GOOS` and `GOARCH` environment variables."
+
 
 ### Embed Directive
 

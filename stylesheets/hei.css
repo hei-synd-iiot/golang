@@ -82,7 +82,7 @@ body[data-md-color-scheme="slate"] .md-typeset .filename {
     font-style: italic;
 }
 
-.md-typeset .md-tooltip {
+body[data-md-color-scheme="slate"] .md-typeset .md-tooltip {
     background-color: rgb(var(--hei-palette-dark));
 }
 
@@ -314,9 +314,6 @@ body[data-md-color-scheme="slate"] .md-typeset .filename {
 .md-typeset .output > summary::after{
     color: rgb(var(--hei-palette-gray));
 }
-
-
-
 
 
 td.code span.kn,

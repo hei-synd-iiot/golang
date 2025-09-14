@@ -1838,7 +1838,7 @@ A **goroutine** is a lightweight thread of execution.
 ![](images/Concurrency.svg)
 
 ```go linenums="1"
-
+--8<-- "examples/GoRoutines/main.go"
 ```
 
 1. Suppose we have a function call `f(s)`. Here’s how we’d call that in the usual way, running it **synchronously**.

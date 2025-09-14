@@ -5604,7 +5604,57 @@ resilient to errors and that provides better error handling and reporting.</p>
 <h3 id="goroutines">Goroutines</h3>
 <p>A <strong>goroutine</strong> is a lightweight thread of execution.</p>
 <p><img alt="" src="images/Concurrency.svg" /></p>
-<div class="language-go highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-82-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-82-1"><a id="__codelineno-82-1" name="__codelineno-82-1"></a>
+<div class="language-go highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-82-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-82-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-82-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-82-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-82-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-82-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-82-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-82-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-82-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-82-10">10</a></span>
+<span class="normal"><a href="#__codelineno-82-11">11</a></span>
+<span class="normal"><a href="#__codelineno-82-12">12</a></span>
+<span class="normal"><a href="#__codelineno-82-13">13</a></span>
+<span class="normal"><a href="#__codelineno-82-14">14</a></span>
+<span class="normal"><a href="#__codelineno-82-15">15</a></span>
+<span class="normal"><a href="#__codelineno-82-16">16</a></span>
+<span class="normal"><a href="#__codelineno-82-17">17</a></span>
+<span class="normal"><a href="#__codelineno-82-18">18</a></span>
+<span class="normal"><a href="#__codelineno-82-19">19</a></span>
+<span class="normal"><a href="#__codelineno-82-20">20</a></span>
+<span class="normal"><a href="#__codelineno-82-21">21</a></span>
+<span class="normal"><a href="#__codelineno-82-22">22</a></span>
+<span class="normal"><a href="#__codelineno-82-23">23</a></span>
+<span class="normal"><a href="#__codelineno-82-24">24</a></span>
+<span class="normal"><a href="#__codelineno-82-25">25</a></span>
+<span class="normal"><a href="#__codelineno-82-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-82-1"><a id="__codelineno-82-1" name="__codelineno-82-1"></a><span class="kn">package</span><span class="w"> </span><span class="nx">main</span>
+</span><span id="__span-82-2"><a id="__codelineno-82-2" name="__codelineno-82-2"></a>
+</span><span id="__span-82-3"><a id="__codelineno-82-3" name="__codelineno-82-3"></a><span class="kn">import</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-82-4"><a id="__codelineno-82-4" name="__codelineno-82-4"></a><span class="w">    </span><span class="s">&quot;fmt&quot;</span>
+</span><span id="__span-82-5"><a id="__codelineno-82-5" name="__codelineno-82-5"></a><span class="w">    </span><span class="s">&quot;time&quot;</span>
+</span><span id="__span-82-6"><a id="__codelineno-82-6" name="__codelineno-82-6"></a><span class="p">)</span>
+</span><span id="__span-82-7"><a id="__codelineno-82-7" name="__codelineno-82-7"></a>
+</span><span id="__span-82-8"><a id="__codelineno-82-8" name="__codelineno-82-8"></a><span class="kd">func</span><span class="w"> </span><span class="nx">f</span><span class="p">(</span><span class="nx">from</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-82-9"><a id="__codelineno-82-9" name="__codelineno-82-9"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="p">&lt;</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">++</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-82-10"><a id="__codelineno-82-10" name="__codelineno-82-10"></a><span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">from</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;:&quot;</span><span class="p">,</span><span class="w"> </span><span class="nx">i</span><span class="p">)</span>
+</span><span id="__span-82-11"><a id="__codelineno-82-11" name="__codelineno-82-11"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-82-12"><a id="__codelineno-82-12" name="__codelineno-82-12"></a><span class="p">}</span>
+</span><span id="__span-82-13"><a id="__codelineno-82-13" name="__codelineno-82-13"></a>
+</span><span id="__span-82-14"><a id="__codelineno-82-14" name="__codelineno-82-14"></a><span class="kd">func</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-82-15"><a id="__codelineno-82-15" name="__codelineno-82-15"></a>
+</span><span id="__span-82-16"><a id="__codelineno-82-16" name="__codelineno-82-16"></a><span class="w">    </span><span class="nx">f</span><span class="p">(</span><span class="s">&quot;direct&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1">// (1)!</span>
+</span><span id="__span-82-17"><a id="__codelineno-82-17" name="__codelineno-82-17"></a>
+</span><span id="__span-82-18"><a id="__codelineno-82-18" name="__codelineno-82-18"></a><span class="w">    </span><span class="k">go</span><span class="w"> </span><span class="nx">f</span><span class="p">(</span><span class="s">&quot;goroutine&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1">// (2)!</span>
+</span><span id="__span-82-19"><a id="__codelineno-82-19" name="__codelineno-82-19"></a>
+</span><span id="__span-82-20"><a id="__codelineno-82-20" name="__codelineno-82-20"></a><span class="w">    </span><span class="k">go</span><span class="w"> </span><span class="kd">func</span><span class="p">(</span><span class="nx">msg</span><span class="w"> </span><span class="kt">string</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// (3)!</span>
+</span><span id="__span-82-21"><a id="__codelineno-82-21" name="__codelineno-82-21"></a><span class="w">        </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span>
+</span><span id="__span-82-22"><a id="__codelineno-82-22" name="__codelineno-82-22"></a><span class="w">    </span><span class="p">}(</span><span class="s">&quot;going&quot;</span><span class="p">)</span>
+</span><span id="__span-82-23"><a id="__codelineno-82-23" name="__codelineno-82-23"></a>
+</span><span id="__span-82-24"><a id="__codelineno-82-24" name="__codelineno-82-24"></a><span class="w">    </span><span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span><span class="w"> </span><span class="c1">// (4)!</span>
+</span><span id="__span-82-25"><a id="__codelineno-82-25" name="__codelineno-82-25"></a><span class="w">    </span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;done&quot;</span><span class="p">)</span>
+</span><span id="__span-82-26"><a id="__codelineno-82-26" name="__codelineno-82-26"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <ol>
 <li>Suppose we have a function call <code>f(s)</code>. Here’s how we’d call that in the usual way, running it <strong>synchronously</strong>.</li>

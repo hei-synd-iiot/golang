@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="261 150 733 510" width="733" height="510">
+  <defs>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="StickArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -5 12 10" markerWidth="12" markerHeight="10" color="#929292">
+      <g>
+        <path d="M 9.6 0 L 0 0 M 0 -3.6 L 9.6 0 L 0 3.6" fill="none" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="Diamond_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-11 -5 12 10" markerWidth="12" markerHeight="10" color="#929292">
+      <g>
+        <path d="M -9.6 0 L -4.8 3.6 L 0 0 L -4.8 -3.6 Z" fill="none" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="StickArrow_Marker_2" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -5 12 10" markerWidth="12" markerHeight="10" color="#929292">
+      <g>
+        <path d="M 9.6 0 L 0 0 M 0 -3.6 L 9.6 0 L 0 3.6" fill="none" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="Diamond_Marker_2" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-11 -5 12 10" markerWidth="12" markerHeight="10" color="#929292">
+      <g>
+        <path d="M -9.6 0 L -4.8 3.6 L 0 0 L -4.8 -3.6 Z" fill="none" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <g id="Workspace_class_diagram" stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
+    <title>Workspace class diagram</title>
+    <g id="Workspace_class_diagram_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_2">
+        <rect x="261.48438" y="150.38125" width="209.77344" height="96.57969" fill="#00b6e9"/>
+        <text transform="translate(266.48438 184.1711)" fill="white">
+          <tspan font-family="Helvetica" font-weight="bold" font-size="24" fill="white" x="36.072266" y="23" xml:space="preserve">Workspace</tspan>
+        </text>
+      </g>
+      <g id="Graphic_3">
+        <rect x="488.6133" y="324.39688" width="209.77344" height="96.57969" fill="#00b6e9"/>
+        <text transform="translate(493.6133 358.1867)" fill="white">
+          <tspan font-family="Helvetica" font-weight="bold" font-size="24" fill="white" x="57.89258" y="23" xml:space="preserve">Module</tspan>
+        </text>
+      </g>
+      <g id="Graphic_4">
+        <rect x="720.707" y="479.3344" width="209.77344" height="96.57969" fill="#00b6e9"/>
+        <text transform="translate(725.707 513.1242)" fill="white">
+          <tspan font-family="Helvetica" font-weight="bold" font-size="24" fill="white" x="51.183594" y="23" xml:space="preserve">Package</tspan>
+        </text>
+      </g>
+      <g id="Line_6">
+        <path d="M 366.3711 268.16094 L 366.3711 372.6867 L 466.1133 372.6867" marker-end="url(#StickArrow_Marker)" marker-start="url(#Diamond_Marker)" stroke="#929292" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Line_7">
+        <path d="M 593.5 442.17656 L 593.5 527.6242 L 698.207 527.6242" marker-end="url(#StickArrow_Marker_2)" marker-start="url(#Diamond_Marker_2)" stroke="#929292" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_8">
+        <text transform="translate(377.1943 261.32812)" fill="#929292">
+          <tspan font-family="Helvetica Neue" font-size="20" fill="#929292" x="0" y="19" xml:space="preserve">1</tspan>
+        </text>
+      </g>
+      <g id="Graphic_9">
+        <text transform="translate(607.4209 430.27734)" fill="#929292">
+          <tspan font-family="Helvetica Neue" font-size="20" fill="#929292" x="0" y="19" xml:space="preserve">1</tspan>
+        </text>
+      </g>
+      <g id="Graphic_10">
+        <text transform="translate(452.0104 346.98047)" fill="#929292">
+          <tspan font-family="Helvetica Neue" font-size="24" fill="#929292" x="15987212e-20" y="23" xml:space="preserve">*</tspan>
+        </text>
+      </g>
+      <g id="Graphic_11">
+        <text transform="translate(685.6427 502.6953)" fill="#929292">
+          <tspan font-family="Helvetica Neue" font-size="24" fill="#929292" x="15987212e-20" y="23" xml:space="preserve">*</tspan>
+        </text>
+      </g>
+      <g id="Line_14">
+        <path d="M 824 575.91406 L 824 652.8008 L 986.5117 652.8008 L 986.5117 528 L 952.5 528" marker-end="url(#StickArrow_Marker_2)" stroke="#929292" stroke-linecap="round" stroke-linejoin="miter" stroke-dasharray="16.0,10.0" stroke-width="2"/>
+      </g>
+      <g id="Graphic_15">
+        <text transform="translate(835.6225 624.2408)" fill="#929292">
+          <tspan font-family="Helvetica Neue" font-size="20" fill="#929292" x="16.733392" y="19" xml:space="preserve">&lt;&lt;import&gt;&gt;</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

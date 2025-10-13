@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="402 268 983 616" width="983" height="616">
+  <defs>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="StickArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -5 12 10" markerWidth="12" markerHeight="10" color="#929292">
+      <g>
+        <path d="M 9.6 0 L 0 0 M 0 -3.6 L 9.6 0 L 0 3.6" fill="none" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="Diamond_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-11 -5 12 10" markerWidth="12" markerHeight="10" color="#929292">
+      <g>
+        <path d="M -9.6 0 L -4.8 3.6 L 0 0 L -4.8 -3.6 Z" fill="none" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <g id="Workspace_object_diagram" stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
+    <title>Workspace object diagram</title>
+    <g id="Workspace_object_diagram_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_2">
+        <rect x="736.7305" y="320.00625" width="209.77344" height="96.57969" fill="#6e3778"/>
+        <text transform="translate(741.7305 342.7961)" fill="white">
+          <tspan font-family="Helvetica" font-size="18" fill="white" x="34.0083" y="18" xml:space="preserve">&lt;&lt;Workspace&gt;&gt;</tspan>
+          <tspan font-family="Helvetica" font-weight="bold" font-size="24" fill="white" x="42.535156" y="45" xml:space="preserve">MyProject</tspan>
+        </text>
+      </g>
+      <g id="Graphic_3">
+        <rect x="402.98438" y="532.38906" width="209.77344" height="96.57969" fill="#009a64"/>
+        <text transform="translate(407.98438 555.1789)" fill="white">
+          <tspan font-family="Helvetica" font-size="18" fill="white" x="49.345215" y="18" xml:space="preserve">&lt;&lt;Module&gt;&gt;</tspan>
+          <tspan font-family="Helvetica" font-weight="bold" font-size="24" fill="white" x="64.54883" y="45" xml:space="preserve">model</tspan>
+        </text>
+      </g>
+      <g id="Graphic_4">
+        <rect x="736.7305" y="532.38906" width="209.77344" height="96.57969" fill="#009a64"/>
+        <text transform="translate(741.7305 555.1789)" fill="white">
+          <tspan font-family="Helvetica" font-size="18" fill="white" x="49.345215" y="18" xml:space="preserve">&lt;&lt;Module&gt;&gt;</tspan>
+          <tspan font-family="Helvetica" font-weight="bold" font-size="24" fill="white" x="63.85156" y="45" xml:space="preserve">server</tspan>
+        </text>
+      </g>
+      <g id="Graphic_5">
+        <rect x="1070.4766" y="532.38906" width="209.77344" height="96.57969" fill="#009a64"/>
+        <text transform="translate(1075.4766 555.1789)" fill="white">
+          <tspan font-family="Helvetica" font-size="18" fill="white" x="49.345215" y="18" xml:space="preserve">&lt;&lt;Module&gt;&gt;</tspan>
+          <tspan font-family="Helvetica" font-weight="bold" font-size="24" fill="white" x="68.54492" y="45" xml:space="preserve">client</tspan>
+        </text>
+      </g>
+      <g id="Line_6">
+        <path d="M 715.5305 368.2961 L 507.8711 368.2961 L 507.8711 509.88906" marker-end="url(#StickArrow_Marker)" marker-start="url(#Diamond_Marker)" stroke="#929292" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Line_7">
+        <line x1="841.6172" y1="437.78594" x2="841.6172" y2="509.88906" marker-end="url(#StickArrow_Marker)" marker-start="url(#Diamond_Marker)" stroke="#929292" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Line_8">
+        <path d="M 967.7039 368.2961 L 1175.3633 368.2961 L 1175.3633 509.88906" marker-end="url(#StickArrow_Marker)" marker-start="url(#Diamond_Marker)" stroke="#929292" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_12">
+        <title>Insert Drive File</title>
+        <path d="M 855.2695 268.26953 C 853.0695 268.26953 851.2895 270.06953 851.2895 272.26953 L 851.2695 304.26953 C 851.2695 306.46953 853.0495 308.26953 855.2495 308.26953 L 879.2695 308.26953 C 881.4695 308.26953 883.2695 306.46953 883.2695 304.26953 L 883.2695 280.26953 L 871.2695 268.26953 L 855.2695 268.26953 Z M 869.2695 282.26953 L 869.2695 271.26953 L 880.2695 282.26953 L 869.2695 282.26953 Z" fill="#6e3778"/>
+      </g>
+      <g id="Graphic_13">
+        <text transform="translate(891.2695 276.48953)" fill="#6e3778">
+          <tspan font-family="Helvetica Neue" font-style="italic" font-size="20" fill="#6e3778" x="0" y="19" xml:space="preserve">go.work</tspan>
+        </text>
+      </g>
+      <g id="Graphic_15">
+        <title>Insert Drive File</title>
+        <path d="M 1204.4844 484.125 C 1202.2844 484.125 1200.5044 485.925 1200.5044 488.125 L 1200.4844 520.125 C 1200.4844 522.325 1202.2644 524.125 1204.4644 524.125 L 1228.4844 524.125 C 1230.6844 524.125 1232.4844 522.325 1232.4844 520.125 L 1232.4844 496.125 L 1220.4844 484.125 L 1204.4844 484.125 Z M 1218.4844 498.125 L 1218.4844 487.125 L 1229.4844 498.125 L 1218.4844 498.125 Z" fill="#009a64"/>
+      </g>
+      <g id="Graphic_14">
+        <text transform="translate(1240.4844 492.345)" fill="#009a64">
+          <tspan font-family="Helvetica Neue" font-style="italic" font-size="20" fill="#009a64" x="0" y="19" xml:space="preserve">go.mod</tspan>
+        </text>
+      </g>
+      <g id="Graphic_17">
+        <title>Insert Drive File</title>
+        <path d="M 535.02344 484.125 C 532.82344 484.125 531.04344 485.925 531.04344 488.125 L 531.02344 520.125 C 531.02344 522.325 532.80344 524.125 535.00344 524.125 L 559.02344 524.125 C 561.22344 524.125 563.02344 522.325 563.02344 520.125 L 563.02344 496.125 L 551.02344 484.125 L 535.02344 484.125 Z M 549.02344 498.125 L 549.02344 487.125 L 560.02344 498.125 L 549.02344 498.125 Z" fill="#009a64"/>
+      </g>
+      <g id="Graphic_16">
+        <text transform="translate(571.02344 492.345)" fill="#009a64">
+          <tspan font-family="Helvetica Neue" font-style="italic" font-size="20" fill="#009a64" x="0" y="19" xml:space="preserve">go.mod</tspan>
+        </text>
+      </g>
+      <g id="Graphic_19">
+        <title>Insert Drive File</title>
+        <path d="M 874.2734 484.125 C 872.0734 484.125 870.2934 485.925 870.2934 488.125 L 870.2734 520.125 C 870.2734 522.325 872.0534 524.125 874.2534 524.125 L 898.2734 524.125 C 900.4734 524.125 902.2734 522.325 902.2734 520.125 L 902.2734 496.125 L 890.2734 484.125 L 874.2734 484.125 Z M 888.2734 498.125 L 888.2734 487.125 L 899.2734 498.125 L 888.2734 498.125 Z" fill="#009a64"/>
+      </g>
+      <g id="Graphic_18">
+        <text transform="translate(910.2734 492.345)" fill="#009a64">
+          <tspan font-family="Helvetica Neue" font-style="italic" font-size="20" fill="#009a64" x="0" y="19" xml:space="preserve">go.mod</tspan>
+        </text>
+      </g>
+      <g id="Graphic_20">
+        <rect x="507.03906" y="673.7367" width="172.4961" height="96.57969" fill="#e46836"/>
+        <text transform="translate(512.03906 696.5266)" fill="white">
+          <tspan font-family="Helvetica" font-size="18" fill="white" x="25.200195" y="18" xml:space="preserve">&lt;&lt;Package&gt;&gt;</tspan>
+          <tspan font-family="Helvetica" font-weight="bold" font-size="24" fill="white" x="45.910156" y="45" xml:space="preserve">model</tspan>
+        </text>
+      </g>
+      <g id="Line_21">
+        <path d="M 455.42773 650.16875 L 455.42773 722.0266 L 484.53906 722.0266" marker-end="url(#StickArrow_Marker)" marker-start="url(#Diamond_Marker)" stroke="#929292" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_23">
+        <rect x="835.9414" y="673.7367" width="172.4961" height="96.57969" fill="#e46836"/>
+        <text transform="translate(840.9414 696.5266)" fill="white">
+          <tspan font-family="Helvetica" font-size="18" fill="white" x="25.200195" y="18" xml:space="preserve">&lt;&lt;Package&gt;&gt;</tspan>
+          <tspan font-family="Helvetica" font-weight="bold" font-size="24" fill="white" x="45.21289" y="45" xml:space="preserve">server</tspan>
+        </text>
+      </g>
+      <g id="Line_24">
+        <path d="M 784.3301 651.16875 L 784.3301 723.0266 L 813.4414 723.0266" marker-end="url(#StickArrow_Marker)" marker-start="url(#Diamond_Marker)" stroke="#929292" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_25">
+        <rect x="835.9414" y="786.4242" width="172.4961" height="96.57969" fill="#e46836"/>
+        <text transform="translate(840.9414 809.2141)" fill="white">
+          <tspan font-family="Helvetica" font-size="18" fill="white" x="25.200195" y="18" xml:space="preserve">&lt;&lt;Package&gt;&gt;</tspan>
+          <tspan font-family="Helvetica" font-weight="bold" font-size="24" fill="white" x="53.240234" y="45" xml:space="preserve">main</tspan>
+        </text>
+      </g>
+      <g id="Graphic_27">
+        <rect x="1164.8438" y="673.7367" width="172.4961" height="96.57969" fill="#e46836"/>
+        <text transform="translate(1169.8438 696.5266)" fill="white">
+          <tspan font-family="Helvetica" font-size="18" fill="white" x="25.200195" y="18" xml:space="preserve">&lt;&lt;Package&gt;&gt;</tspan>
+          <tspan font-family="Helvetica" font-weight="bold" font-size="24" fill="white" x="49.90625" y="45" xml:space="preserve">client</tspan>
+        </text>
+      </g>
+      <g id="Graphic_26">
+        <rect x="1164.8438" y="786.4242" width="172.4961" height="96.57969" fill="#e46836"/>
+        <text transform="translate(1169.8438 809.2141)" fill="white">
+          <tspan font-family="Helvetica" font-size="18" fill="white" x="25.200195" y="18" xml:space="preserve">&lt;&lt;Package&gt;&gt;</tspan>
+          <tspan font-family="Helvetica" font-weight="bold" font-size="24" fill="white" x="53.240234" y="45" xml:space="preserve">main</tspan>
+        </text>
+      </g>
+      <g id="Line_28">
+        <path d="M 1113.2324 652.16875 L 1113.2324 724.0266 L 1142.3438 724.0266" marker-end="url(#StickArrow_Marker)" marker-start="url(#Diamond_Marker)" stroke="#929292" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Line_29">
+        <path d="M 784.3301 723.0266 L 784.3301 834.7141 L 813.4414 834.7141" marker-end="url(#StickArrow_Marker)" stroke="#929292" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Line_30">
+        <path d="M 1113.2324 724.0266 L 1113.2324 835.7141 L 1142.3438 835.7141" marker-end="url(#StickArrow_Marker)" stroke="#929292" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -110,14 +110,6 @@
   - Wrap the `select` in a `for` loop so it keeps reacting to whichever sensor is
     ready next.
 
-  #hint[
-    If you find yourself copy-pasting the same print statement four times inside
-    `select`, consider having every sensor send a small struct (id + value) on a
-    single shared channel instead, and drop the `select` in favour of one
-    `for range` loop. Both designs are valid --- try the `select` version first,
-    it's what stage 3 builds on most directly.
-  ]
-
   *Expected output*:
   ```
   sensor 2: 24.31
@@ -129,27 +121,47 @@
 ]
 
 #task(
+  [Fan-in with a shared struct channel],
+  [Replace the select fan-in with one channel of structs.],
+)[
+  If you found yourself copy-pasting the same print statement four times inside
+  `select`, there's a simpler design worth comparing against.
+
+  - Define a small struct, e.g. `type reading struct { id int; value float64 }`.
+  - Have every sensor goroutine send a `reading{id, value}` on one single shared
+    channel, instead of each sensor getting its own channel.
+  - In `main`, drop the `select` and replace it with one `for r := range readings`
+    loop, printing each value tagged with `r.id`.
+  - Compare the result against your previous solution: same output, less
+    repetition.
+
+  Both designs are valid --- the `select` version is what the next task builds
+  on most directly.
+
+  *Expected output* (same interleaving as the previous task):
+  ```
+  sensor 2: 24.31
+  sensor 1: 18.02
+  sensor 4: 29.87
+  sensor 3: 20.15
+  ```
+]
+
+#task(
   [Detect an offline sensor],
   [Notice when a sensor stops reporting.],
 )[
   - Decide on a deadline, e.g. 2 seconds: if a given sensor hasn't sent a reading
     within that time, the station should print e.g. `sensor 3: OFFLINE`.
-  - Hint: for each sensor, `select` between receiving on its channel and
+  - Hint: for each sensor, start a goroutine for monitoring its values and state.
+    Connect each sensor to the `monitor` using a dedicated channel of `reading{id, value}`.
+    Inside the `monitor`, `select` between receiving on its input channel and
     `<-time.After(2 * time.Second)`. Each time you *do* receive a reading, the
     deadline effectively resets, because you call `time.After` again on the next
-    loop iteration.
+    loop iteration. All `monitor`s send the state report to a shared results channel.
   - To test this, temporarily make one sensor goroutine stop sending after a few
     readings and confirm the dashboard correctly flags exactly that sensor as
     offline, while the other three keep reporting normally.
-
-  #hint[
-    A naive per-sensor `select` inside one shared loop only checks *one* sensor's
-    timeout per iteration if you're not careful about structure. Make sure every
-    sensor's timeout is tracked independently --- one working approach is one
-    small goroutine *per sensor* that does its own `select` between "reading
-    received" and "deadline expired", reporting to a single results channel that
-    `main` prints from.
-  ]
 
   *Expected output* (sensor 3 stopped early in this run):
   ```

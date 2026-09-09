@@ -3,60 +3,42 @@ package main
 import (
 	"fmt"
 	"math/rand"
-	"sync"
 	"time"
 )
 
-// sensor sends up to maxReadings readings (or forever if maxReadings <= 0),
-// exiting early if done is closed.
-func sensor(id int, maxReadings int, out chan<- float64, done <-chan struct{}, wg *sync.WaitGroup) {
-	defer wg.Done()
+type reading struct {
+	id    int
+	value float64
+}
 
+type report struct {
+	reading
+	offline bool
+}
+
+// sensor sends up to maxReadings readings (or forever if maxReadings <= 0),
+// simulating a device that can go quiet partway through a run.
+func sensor(id int, maxReadings int, out chan<- reading) {
 	sent := 0
 	for maxReadings <= 0 || sent < maxReadings {
 		delay := time.Duration(300+rand.Intn(900)) * time.Millisecond
-
-		select {
-		case <-time.After(delay):
-		case <-done:
-			return
-		}
-
-		select {
-		case out <- 15 + rand.Float64()*15:
-			sent++
-		case <-done:
-			return
-		}
+		time.Sleep(delay)
+		out <- reading{id: id, value: 15 + rand.Float64()*15}
+		sent++
 	}
-
-	<-done // stays "present" (like a real quiet device) until told to stop
+	// stops sending, but the channel is left open: a real device that has gone
+	// quiet doesn't politely close anything on its way out.
 }
 
-// monitor watches a single sensor's channel, printing readings or an offline
-// status, and safely tallies successful readings in the shared counts map.
-func monitor(
-	id int,
-	in <-chan float64,
-	deadline time.Duration,
-	done <-chan struct{},
-	wg *sync.WaitGroup,
-	mu *sync.Mutex,
-	counts map[int]int,
-) {
-	defer wg.Done()
-
+// monitor watches a single sensor's channel and reports either a fresh reading
+// or an "offline" status if nothing arrived within the deadline.
+func monitor(id int, in <-chan reading, deadline time.Duration, results chan<- report) {
 	for {
 		select {
 		case r := <-in:
-			fmt.Printf("sensor %d: %.2f\n", id, r)
-			mu.Lock()
-			counts[id]++
-			mu.Unlock()
+			results <- report{reading: r, offline: false}
 		case <-time.After(deadline):
-			fmt.Printf("sensor %d: OFFLINE\n", id)
-		case <-done:
-			return
+			results <- report{reading: reading{id: id}, offline: true}
 		}
 	}
 }
@@ -64,32 +46,26 @@ func monitor(
 func main() {
 	const numSensors = 4
 	const deadline = 2 * time.Second
-	const runFor = 15 * time.Second
 
-	done := make(chan struct{})
-	var wg sync.WaitGroup
-	var mu sync.Mutex
-	counts := make(map[int]int)
+	reports := make(chan report)
 
 	for i := 1; i <= numSensors; i++ {
-		readings := make(chan float64)
+		readings := make(chan reading)
 
 		maxReadings := 0
 		if i == 3 {
-			maxReadings = 3
+			maxReadings = 3 // sensor 3 goes quiet early, on purpose
 		}
 
-		wg.Add(2) // one sensor goroutine + one monitor goroutine
-		go sensor(i, maxReadings, readings, done, &wg)
-		go monitor(i, readings, deadline, done, &wg, &mu, counts)
+		go sensor(i, maxReadings, readings)
+		go monitor(i, readings, deadline, reports)
 	}
 
-	time.Sleep(runFor)
-	fmt.Println("shutting down...")
-	close(done)
-	wg.Wait() // wg.Wait() already synchronizes: no lock needed for this final read
-
-	for i := 1; i <= numSensors; i++ {
-		fmt.Printf("sensor %d: %d readings\n", i, counts[i])
+	for r := range reports {
+		if r.offline {
+			fmt.Printf("sensor %d: OFFLINE\n", r.id)
+		} else {
+			fmt.Printf("sensor %d: %.2f\n", r.id, r.value)
+		}
 	}
 }

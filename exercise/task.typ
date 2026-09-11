@@ -181,14 +181,19 @@
   - After a fixed duration (e.g. 15 seconds), the station should stop all sensor
     goroutines, wait for them to actually finish, and print a one-line summary
     per sensor: how many readings it received in total.
+  - Add a function `reporter(reports chan report, done chan struct{})` where `reports`
+    is the channel that brings the reports in, while `done` is a channel that the
+    function closes with `close(done)` in order to signalize the all reports have
+    been processed. Call the function a goroutine before waiting the fixed duration.
   - Use a shared `done chan struct{}` that `main` `close()`s when the run
-    duration elapses. Every goroutine's loop should `select` on `done` alongside
-    its normal work, and return when `done` is closed.
-  - Use a `sync.WaitGroup` so `main` can block until every goroutine has actually
-    returned before printing the summary --- don't just `time.Sleep` and hope.
-  - Keep a per-sensor reading count. Since multiple goroutines update shared
-    state, protect it with a `sync.Mutex` (or use one `atomic.Int64` counter per
-    sensor if you'd rather avoid the mutex).
+    duration elapses. Every goroutine's loop (expect for `reporter`) should
+    `select` on `done` alongside its normal work, and return when `done` is closed.
+  - Use a `sync.WaitGroup` so `main` can block until every goroutine (expect `reporter`)
+    has actually returned before printing the summary --- don't just `time.Sleep` and hope.
+  - Afterwards close the `reports` channel and wait for `reposrter ` to finish before printing
+    the summary.
+  - Keep a per-sensor reading count as shared `map[int]int` channel where the index is the
+    sensor ID. Since multiple goroutines update this shared state, protect it with a `sync.Mutex`.
 
   #hint[
     Run your program with `go run -race .`. If you see a `DATA RACE` warning,
@@ -205,17 +210,4 @@
   sensor 3: 3 readings
   sensor 4: 16 readings
   ```
-]
-
-#task(
-  extra: true,
-  [Stretch goal --- `context.Context`],
-  [Replace the hand-rolled `done` channel with `context.WithTimeout`.],
-)[
-  Go's standard library provides a purpose-built way to express "run until
-  cancelled or timed out": `context.Context`. Replace your `done` channel with a
-  `context.Context`, and have each goroutine `select` on `ctx.Done()` instead.
-  This isn't covered elsewhere in the course material, so treat it as an optional
-  look ahead at a pattern you'll see constantly in real Go code, especially
-  anything involving networking.
 ]
